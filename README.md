@@ -1,6 +1,8 @@
 JAMES Examples Module
 =====================
 
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.jamesframework/james-examples/badge.svg?style=flat)](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22james-examples%22)
+
 The JAMES examples module is part of the [JAMES framework][james-github].
 
 This module provides a series of example problem implementations.
