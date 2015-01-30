@@ -1,7 +1,7 @@
-James Examples Module
+JAMES Examples Module
 =====================
 
-The James examples module is part of the [James framework][james-website].
+The JAMES examples module is part of the [JAMES framework][james-website].
 
 This module provides a series of example problem implementations.
   
@@ -15,19 +15,19 @@ java -jar james-examples.jar
 ```
 
 Example input files are found in the `input` folder. Step-by-step implementation
-guides are provided at the [James website][examples-website].
+guides are provided at the [JAMES website][examples-website].
 
 License and copyright
 =====================
 
-The James examples module is licensed under the Apache License, Version 2.0, see
+The JAMES examples module is licensed under the Apache License, Version 2.0, see
 LICENSE file or http://www.apache.org/licenses/LICENSE-2.0. Copyright information
 is stated in the NOTICE file.
 
 Contact
 =======
 
-The James examples module is developed and maintained by
+The JAMES examples module is developed and maintained by
 
  - Herman De Beukelaer (Herman.DeBeukelaer@UGent.be)
  
