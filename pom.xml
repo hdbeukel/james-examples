@@ -14,7 +14,7 @@
     <packaging>jar</packaging>
     <name>james-examples</name>
     <description>
-        The James examples module is part of the James framework for discrete optimization
+        The JAMES examples module is part of the JAMES framework for discrete optimization
         using local search metaheuristics in Java. It provides a series of example problem
         implementations where different algorithms are applied to obtain solutions.
     </description>
