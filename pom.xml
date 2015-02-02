@@ -19,7 +19,9 @@
         implementations where different algorithms are applied to obtain solutions.
     </description>
     <scm>
-      <url>https://github.com/hdbeukel/james/tree/master/james/james-examples</url>
+        <connection>scm:git:git@github.com:hdbeukel/james-examples.git</connection>
+        <developerConnection>scm:git:git@github.com:hdbeukel/james-examples.git</developerConnection>
+        <url>https://github.com/hdbeukel/james-examples</url>
     </scm>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
