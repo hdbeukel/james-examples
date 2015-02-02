@@ -6,14 +6,12 @@ jdk:
 branches:
   only:
     - master
-  
+
 env:
   global:
     - SONATYPE_USERNAME=hdbeukel
-    - secure: "POA/QLNaBtGklSMHFLXx/fUwSowUc1n+umNREcDFoFGm7k3K4dwAVJ5UNLLC/omG9g7QFCQ4p7wZ0DY/uzUGit66XQ2JElnEz+D2Q3NiohEUCdqwNrF9Gl4l4SWaRWZ5/f8GoREJTePms/Z7Cuv3QA9iazywBE+AsP80i9EqITE="
-    - secure: "Ca5ffX/dnkm1tSCTy2Q+Tn8s6M0OgZFewlMEjm6WtAOLx3Fpt9mWGPtoRxYLw7HkteycySTSJwp9pf6DwEM1bGme+SMMYoEiQeues3xldf9eAws/ffTFPF0ZZM8wFDY3Ks+MjHXg/JFWgnLfW7PqtkNGdmahGsh35ad1Puv78x0="
-    
+    - secure: KHTNMziEQ6YQx/v7rw291EMo8V3qZmrw71q9XUfvLpXI+OQ2TINoaibEXgR/9PEwobxJNlVDWysshzfMzsKeMfcT584WcjnYmIyeq5rPOnpnLYhffqC65Cu/I+BC9GRtk1AEVeipMYRXLnvqx8z4AgGaH+5L3pfnaXrYyqKeDCY=
+
 after_success:
   - python .travis/add-sonatype-server.py
   - mvn clean deploy -DskipTests=true --settings ~/.m2/mySettings.xml
-  
