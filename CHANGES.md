@@ -4,7 +4,7 @@ JAMES Examples Module Changes
 Version 0.2.1 (under development)
 ---------------------------------
 
- - Fixed conflicting logback settings. All settings are now inherited from the core module.
+ - Fixed conflicting logback settings in tests. Settings are now inherited from the core module.
 
 Version 0.2 (12/11/2014)
 ------------------------
