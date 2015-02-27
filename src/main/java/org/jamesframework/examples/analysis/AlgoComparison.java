@@ -157,7 +157,7 @@ public class AlgoComparison {
                 updateLoader(loader, p, l);
             }
         };
-        loaderTimer.scheduleAtFixedRate(loaderTask, 0, 100);
+        loaderTimer.schedule(loaderTask, 0, 100);
         
         AnalysisResults<SubsetSolution> results = analysis.run();
         
