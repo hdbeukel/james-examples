@@ -117,6 +117,18 @@ public class Main {
         System.out.println("");
         System.out.println("java -cp james-examples.jar org.jamesframework.examples.tsp2.TSP2 <inputfile> <runtime>");
         System.out.println("");
+        System.out.println("Example 5: comparing algorithm performance");
+        System.out.println("------------------------------------------");
+        System.out.println("");
+        System.out.println("Performs an example analysis using the provided tools from the extensions module. \n"
+                         + "The core subset selection problem is used as a case study, and the entry-to-nearest-entry \n"
+                         + "objective from example 1C is maximized. Both random descent as well as parallel tempering \n"
+                         + "are applied to solve the problem for a series of given data sets.");
+        System.out.println("");
+        System.out.println("Usage:");
+        System.out.println("");
+        System.out.println("java -cp james-examples.jar org.jamesframework.examples.analysis.AlgoComparison <subsetsize> <runtime> [<inputfile>]+");
+        System.out.println("");
     }
     
 }
