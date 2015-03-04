@@ -39,6 +39,7 @@ import org.jamesframework.examples.coresubset.CoreSubsetFileReader;
 import org.jamesframework.examples.coresubset3.EntryToNearestEntryObjective;
 import org.jamesframework.ext.analysis.Analysis;
 import org.jamesframework.ext.analysis.AnalysisResults;
+import org.jamesframework.ext.analysis.JsonConverter;
 
 /**
  * Compares algorithm performance using the analysis tools from the extensions module (example 5).
@@ -170,7 +171,7 @@ public class AlgoComparison {
         System.out.println("# WRITING JSON FILE");
         String jsonFile = "AlgoComparison.json";
         try {
-            results.writeJSON(jsonFile, sol -> Json.array(sol.getSelectedIDs().toArray()));
+            results.writeJSON(jsonFile, JsonConverter.SUBSET_SOLUTION);
         } catch (IOException ex) {
             System.err.println("Failed to write JSON file: " + jsonFile);
             System.exit(3);
