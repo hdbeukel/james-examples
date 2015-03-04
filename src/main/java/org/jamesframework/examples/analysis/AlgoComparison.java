@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
-import mjson.Json;
 import org.jamesframework.core.search.Search;
 import org.jamesframework.core.search.algo.ParallelTempering;
 import org.jamesframework.core.search.algo.RandomDescent;
@@ -52,12 +51,12 @@ import org.jamesframework.ext.analysis.JsonConverter;
 public class AlgoComparison {
     
     /**
-     * Runs the analysis. Expects a variable number of parameters: (1) the desired core size, (2) the runtime
-     * limit (in seconds) of each applied search and (3+) the input file paths of the different datasets for
-     * which the analysis is to be performed. The input files are specified in a CSV file in which the first
-     * row (header) lists the N item names and the subsequent N rows describe a symmetric (N x N) distance matrix.
-     * The distance matrix indicates the distance between each pair of items, where the rows follow the same order as
-     * the columns, as indicated by the header row.
+     * Runs the analysis. Expects a variable number of parameters: (1) the desired selection ratio (real value
+     * in [0,1]), (2) the runtime limit (in seconds) of each applied search and (3+) the input file paths of
+     * the different datasets for which the analysis is to be performed. The input files are specified in a
+     * CSV file in which the first row (header) lists the N item names and the subsequent N rows describe a
+     * symmetric (N x N) distance matrix. The distance matrix indicates the distance between each pair of
+     * items, where the rows follow the same order as the columns, as indicated by the header row.
      * 
      * @param args array containing the desired core size, the runtime limit and the data set file paths
      */
@@ -67,19 +66,21 @@ public class AlgoComparison {
         System.out.println("###########################################");
         // parse arguments
         if(args.length < 3){
-            System.err.println("Usage: java -cp james-examples.jar org.jamesframework.examples.analysis.AlgoComparison <subsetsize> <runtime> [<inputfile>]+");
+            System.err.println("Usage: java -cp james-examples.jar "
+                    + "org.jamesframework.examples.analysis.AlgoComparison "
+                    + "<selection-ratio> <runtime> [<inputfile>]+");
             System.exit(1);
         }
-        int coreSize = Integer.parseInt(args[0]);
+        double selRatio = Double.parseDouble(args[0]);
         int timeLimit = Integer.parseInt(args[1]);
         List<String> filePaths = new ArrayList<>();
         for(int i=2; i<args.length; i++){
             filePaths.add(args[i]);
         }
-        run(filePaths, coreSize, timeLimit);
+        run(filePaths, selRatio, timeLimit);
     }
     
-    private static void run(List<String> filePaths, int coreSize, int timeLimit){
+    private static void run(List<String> filePaths, double selRatio, int timeLimit){
         
         // read data sets
         System.out.println("# PARSING INPUT");
@@ -107,6 +108,8 @@ public class AlgoComparison {
         for(int d=0; d<dataSets.size(); d++){
             // create problem
             CoreSubsetData data = dataSets.get(d);
+            // set core size
+            int coreSize = (int) Math.round(selRatio * data.getIDs().size());
             SubsetProblem<CoreSubsetData> problem = new SubsetProblem<>(obj, data, coreSize);
             // set problem ID to file name (without directories)
             String path = filePaths.get(d);

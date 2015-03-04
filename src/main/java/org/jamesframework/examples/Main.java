@@ -38,7 +38,9 @@ public class Main {
         System.out.println("");
         System.out.println("Usage:");
         System.out.println("");
-        System.out.println("java -cp james-examples.jar org.jamesframework.examples.coresubset.CoreSubset <inputfile> <subsetsize> <runtime>");
+        System.out.println("java -cp james-examples.jar "
+                + "org.jamesframework.examples.coresubset.CoreSubset "
+                + "<inputfile> <subsetsize> <runtime>");
         System.out.println("");
         System.out.println("Example 1B: core subset selection (2)");
         System.out.println("-------------------------------------");
@@ -48,7 +50,9 @@ public class Main {
         System.out.println("");
         System.out.println("Usage:");
         System.out.println("");
-        System.out.println("java -cp james-examples.jar org.jamesframework.examples.coresubset2.CoreSubset2 <inputfile> <subsetsize> <runtime>");
+        System.out.println("java -cp james-examples.jar "
+                + "org.jamesframework.examples.coresubset2.CoreSubset2 "
+                + "<inputfile> <subsetsize> <runtime>");
         System.out.println("");
         System.out.println("Example 1C: core subset selection (3)");
         System.out.println("-------------------------------------");
@@ -61,7 +65,9 @@ public class Main {
         System.out.println("");
         System.out.println("Usage:");
         System.out.println("");
-        System.out.println("java -cp james-examples.jar org.jamesframework.examples.coresubset3.CoreSubset3 <inputfile> <subsetsize> <runtime>");
+        System.out.println("java -cp james-examples.jar "
+                + "org.jamesframework.examples.coresubset3.CoreSubset3 "
+                + "<inputfile> <subsetsize> <runtime>");
         System.out.println("");
         System.out.println("Example 2: the 0/1 knapsack problem");
         System.out.println("-----------------------------------");
@@ -74,7 +80,9 @@ public class Main {
         System.out.println("");
         System.out.println("Usage:");
         System.out.println("");
-        System.out.println("java -cp james-examples.jar org.jamesframework.examples.knapsack.KnapSack <inputfile> <capacity> <runtime>");
+        System.out.println("java -cp james-examples.jar "
+                + "org.jamesframework.examples.knapsack.KnapSack "
+                + "<inputfile> <capacity> <runtime>");
         System.out.println("");
         System.out.println("Example 2B: the 0/1 knapsack problem (2)");
         System.out.println("----------------------------------------");
@@ -85,7 +93,9 @@ public class Main {
         System.out.println("");
         System.out.println("Usage:");
         System.out.println("");
-        System.out.println("java -cp james-examples.jar org.jamesframework.examples.knapsack2.KnapSack2 <inputfile> <capacity> <runtime>");
+        System.out.println("java -cp james-examples.jar "
+                + "org.jamesframework.examples.knapsack2.KnapSack2 "
+                + "<inputfile> <capacity> <runtime>");
         System.out.println("");
         System.out.println("Example 3: the maximum clique problem");
         System.out.println("-------------------------------------");
@@ -95,7 +105,9 @@ public class Main {
         System.out.println("");
         System.out.println("Usage:");
         System.out.println("");
-        System.out.println("java -cp james-examples.jar org.jamesframework.examples.clique.MaximumClique <inputfile> <maxshake> <runtime>");
+        System.out.println("java -cp james-examples.jar "
+                + "org.jamesframework.examples.clique.MaximumClique "
+                + "<inputfile> <maxshake> <runtime>");
         System.out.println("");
         System.out.println("Example 4: the travelling salesman problem");
         System.out.println("------------------------------------------");
@@ -105,7 +117,9 @@ public class Main {
         System.out.println("");
         System.out.println("Usage:");
         System.out.println("");
-        System.out.println("java -cp james-examples.jar org.jamesframework.examples.tsp.TSP <inputfile> <runtime>");
+        System.out.println("java -cp james-examples.jar "
+                + "org.jamesframework.examples.tsp.TSP "
+                + "<inputfile> <runtime>");
         System.out.println("");
         System.out.println("Example 4B: the travelling salesman problem (2)");
         System.out.println("-----------------------------------------------");
@@ -115,7 +129,9 @@ public class Main {
         System.out.println("");
         System.out.println("Usage:");
         System.out.println("");
-        System.out.println("java -cp james-examples.jar org.jamesframework.examples.tsp2.TSP2 <inputfile> <runtime>");
+        System.out.println("java -cp james-examples.jar "
+                + "org.jamesframework.examples.tsp2.TSP2 "
+                + "<inputfile> <runtime>");
         System.out.println("");
         System.out.println("Example 5: comparing algorithm performance");
         System.out.println("------------------------------------------");
@@ -127,7 +143,9 @@ public class Main {
         System.out.println("");
         System.out.println("Usage:");
         System.out.println("");
-        System.out.println("java -cp james-examples.jar org.jamesframework.examples.analysis.AlgoComparison <subsetsize> <runtime> [<inputfile>]+");
+        System.out.println("java -cp james-examples.jar "
+                + "org.jamesframework.examples.analysis.AlgoComparison "
+                + "<selection-ratio> <runtime> [<inputfile>]+");
         System.out.println("");
     }
     
