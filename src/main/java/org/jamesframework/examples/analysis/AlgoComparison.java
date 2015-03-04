@@ -111,9 +111,10 @@ public class AlgoComparison {
             // set core size
             int coreSize = (int) Math.round(selRatio * data.getIDs().size());
             SubsetProblem<CoreSubsetData> problem = new SubsetProblem<>(obj, data, coreSize);
-            // set problem ID to file name (without directories)
+            // set problem ID to file name (without directories and without extension)
             String path = filePaths.get(d);
-            String id = new File(path).getName();
+            String filename = new File(path).getName();
+            String id = filename.substring(0, filename.lastIndexOf("."));
             System.out.println("Add problem \"" + id + "\" (read from: " + path + ")");
             analysis.addProblem(id, problem);
         }
