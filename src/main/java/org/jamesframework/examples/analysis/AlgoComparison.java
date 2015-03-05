@@ -52,13 +52,15 @@ public class AlgoComparison {
     
     /**
      * Runs the analysis. Expects a variable number of parameters: (1) the desired selection ratio (real value
-     * in [0,1]), (2) the runtime limit (in seconds) of each applied search and (3+) the input file paths of
-     * the different datasets for which the analysis is to be performed. The input files are specified in a
-     * CSV file in which the first row (header) lists the N item names and the subsequent N rows describe a
-     * symmetric (N x N) distance matrix. The distance matrix indicates the distance between each pair of
-     * items, where the rows follow the same order as the columns, as indicated by the header row.
+     * in [0,1]) which determines the core size, (2) the number of runs (i.e. repeats) per search (3) the runtime
+     * limit (in seconds) of each search run and (4+) the input file paths of the datasets for which the analysis
+     * is to be performed. The input files are specified in a CSV file in which the first row (header) lists the
+     * N item names and the subsequent N rows describe a symmetric (N x N) distance matrix. The distance matrix
+     * indicates the distance between each pair of items, where the rows follow the same order as the columns,
+     * as indicated by the header row.
      * 
-     * @param args array containing the desired core size, the runtime limit and the data set file paths
+     * @param args array containing the desired selection ratio, number of search runs, runtime limit per run
+     *             and the data set file paths
      */
     public static void main(String[] args) {
         System.out.println("###########################################");
@@ -68,19 +70,20 @@ public class AlgoComparison {
         if(args.length < 3){
             System.err.println("Usage: java -cp james-examples.jar "
                     + "org.jamesframework.examples.analysis.AlgoComparison "
-                    + "<selection-ratio> <runtime> [<inputfile>]+");
+                    + "<selection-ratio> <runs> <runtime> [<inputfile>]+");
             System.exit(1);
         }
         double selRatio = Double.parseDouble(args[0]);
-        int timeLimit = Integer.parseInt(args[1]);
+        int runs = Integer.parseInt(args[1]);
+        int timeLimit = Integer.parseInt(args[2]);
         List<String> filePaths = new ArrayList<>();
-        for(int i=2; i<args.length; i++){
+        for(int i=3; i<args.length; i++){
             filePaths.add(args[i]);
         }
-        run(filePaths, selRatio, timeLimit);
+        run(filePaths, selRatio, runs, timeLimit);
     }
     
-    private static void run(List<String> filePaths, double selRatio, int timeLimit){
+    private static void run(List<String> filePaths, double selRatio, int runs, int timeLimit){
         
         // read data sets
         System.out.println("# PARSING INPUT");
@@ -101,6 +104,8 @@ public class AlgoComparison {
         
         // initialize analysis object
         Analysis<SubsetSolution> analysis = new Analysis<>();
+        // set number of runs
+        analysis.setNumRuns(runs);
         
         // ADD PROBLEMS (ONE PER DATA SET)
         System.out.println("# ADDING PROBLEMS TO ANALYSIS");
@@ -148,6 +153,7 @@ public class AlgoComparison {
         
         // run analysis
         System.out.println("# RUNNING ANALYSIS");
+        System.out.println("Performing " + runs + " runs of each search ...");
         
         Timer loaderTimer = new Timer();
         TimerTask loaderTask = new TimerTask() {

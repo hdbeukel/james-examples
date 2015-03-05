@@ -145,7 +145,7 @@ public class Main {
         System.out.println("");
         System.out.println("java -cp james-examples.jar "
                 + "org.jamesframework.examples.analysis.AlgoComparison "
-                + "<selection-ratio> <runtime> [<inputfile>]+");
+                + "<selection-ratio> <runs> <runtime> [<inputfile>]+");
         System.out.println("");
     }
     
