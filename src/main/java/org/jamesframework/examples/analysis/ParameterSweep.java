@@ -19,6 +19,7 @@ package org.jamesframework.examples.analysis;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,8 +27,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 import org.jamesframework.core.search.Search;
-import org.jamesframework.core.search.algo.ParallelTempering;
-import org.jamesframework.core.search.algo.RandomDescent;
+import org.jamesframework.core.search.algo.MetropolisSearch;
 import org.jamesframework.core.search.stopcriteria.MaxRuntime;
 import org.jamesframework.core.search.stopcriteria.StopCriterion;
 import org.jamesframework.core.subset.SubsetProblem;
@@ -41,49 +41,57 @@ import org.jamesframework.ext.analysis.AnalysisResults;
 import org.jamesframework.ext.analysis.JsonConverter;
 
 /**
- * Compares algorithm performance using the analysis tools from the extensions module (example 5B).
+ * Performs a parameter sweep using the analysis tools from the extensions module (example 5A).
  * The core subset selection problem is used as a case study, and the entry-to-nearest-entry
- * objective from example 1C is maximized. Both random descent as well as parallel tempering
- * are applied to solve the problem for a series of given data sets.
+ * objective from example 1C is maximized. Different Metropolis searches with a variety of
+ * fixed temperatures are applied to find an appropriate temperature range to be used for a
+ * parallel tempering search (see example 5B).
  * 
  * @author <a href="mailto:herman.debeukelaer@ugent.be">Herman De Beukelaer</a>
  */
-public class AlgoComparison {
+public class ParameterSweep {
     
     /**
      * Runs the analysis. Expects a variable number of parameters: (1) the desired selection ratio (real value
      * in [0,1]) which determines the core size, (2) the number of runs (i.e. repeats) per search (3) the runtime
-     * limit (in seconds) of each search run and (4+) the input file paths of the datasets for which the analysis
+     * limit (in seconds) of each search run, (4) the minimum temperature, (5) the maximum temperature, (6) the
+     * number of applied Metropolis searches and (7+) the input file paths of the datasets for which the analysis
      * is to be performed. The input files are specified in a CSV file in which the first row (header) lists the
      * N item names and the subsequent N rows describe a symmetric (N x N) distance matrix. The distance matrix
      * indicates the distance between each pair of items, where the rows follow the same order as the columns,
      * as indicated by the header row.
      * 
-     * @param args array containing the desired selection ratio, number of search runs, runtime limit per run
-     *             and the data set file paths
+     * @param args array containing the desired selection ratio, number of search runs, runtime limit per run,
+     *             minimum temperature, maximum temperature, number of applied Metropolis searches and data set
+     *             file paths
      */
     public static void main(String[] args) {
-        System.out.println("###########################################");
-        System.out.println("# ANALYSIS: COMPARE ALGORITHM PERFORMANCE #");
-        System.out.println("###########################################");
+        System.out.println("#############################");
+        System.out.println("# ANALYSIS: PARAMETER SWEEP #");
+        System.out.println("#############################");
         // parse arguments
-        if(args.length < 4){
+        if(args.length < 7){
             System.err.println("Usage: java -cp james-examples.jar "
-                    + "org.jamesframework.examples.analysis.AlgoComparison "
-                    + "<selection-ratio> <runs> <runtime> [<inputfile>]+");
+                    + "org.jamesframework.examples.analysis.ParameterSweep "
+                    + "<selection-ratio> <runs> <runtime> <mintemp> <maxtemp> "
+                    + "<numsearches> [<inputfile>]+");
             System.exit(1);
         }
         double selRatio = Double.parseDouble(args[0]);
         int runs = Integer.parseInt(args[1]);
         int timeLimit = Integer.parseInt(args[2]);
+        double minTemp = Double.parseDouble(args[3]);
+        double maxTemp = Double.parseDouble(args[4]);
+        int n = Integer.parseInt(args[5]);
         List<String> filePaths = new ArrayList<>();
-        for(int i=3; i<args.length; i++){
+        for(int i=6; i<args.length; i++){
             filePaths.add(args[i]);
         }
-        run(filePaths, selRatio, runs, timeLimit);
+        run(filePaths, selRatio, runs, timeLimit, minTemp, maxTemp, n);
     }
     
-    private static void run(List<String> filePaths, double selRatio, int runs, int timeLimit){
+    private static void run(List<String> filePaths, double selRatio, int runs,
+            int timeLimit, double minTemp, double maxTemp, int numSearches){
         
         // read data sets
         System.out.println("# PARSING INPUT");
@@ -130,26 +138,20 @@ public class AlgoComparison {
         // create stop criterion
         StopCriterion stopCrit = new MaxRuntime(timeLimit, TimeUnit.SECONDS);
         
-        // add random descent
-        System.out.println("Add random descent");
-        analysis.addSearch("Random Descent", problem -> {
-            Search<SubsetSolution> rd = new RandomDescent<>(problem, new SingleSwapNeighbourhood());
-            rd.addStopCriterion(stopCrit);
-            return rd;
-        });
-        
-        // add parallel tempering
-        System.out.println("Add parallel tempering");
-        analysis.addSearch("Parallel Tempering", problem -> {
-            double minTemp = 0.00001;
-            double maxTemp = 0.001;
-            int numReplicas = 10;
-            Search<SubsetSolution> pt = new ParallelTempering<>(problem,
-                                                                new SingleSwapNeighbourhood(),
-                                                                numReplicas, minTemp, maxTemp);
-            pt.addStopCriterion(stopCrit);
-            return pt;
-        });
+        double tempDelta = (maxTemp - minTemp)/(numSearches - 1);
+        DecimalFormat df = new DecimalFormat("#.################");
+        for(int s=0; s<numSearches; s++){
+            // compute temperature
+            double temp = minTemp + s * tempDelta;
+            // add Metropolis search
+            System.out.format("Add Metropolis search (temp: %s)\n", df.format(temp));
+            String id = "MS-" + (s+1);
+            analysis.addSearch(id, problem -> {
+                Search<SubsetSolution> ms = new MetropolisSearch<>(problem, new SingleSwapNeighbourhood(), temp);
+                ms.addStopCriterion(stopCrit);
+                return ms;
+            });
+        }
         
         // run analysis
         System.out.format("# RUNNING ANALYSIS (runs per search: %d)\n", runs);
@@ -178,7 +180,7 @@ public class AlgoComparison {
         
         // write to JSON
         System.out.println("# WRITING JSON FILE");
-        String jsonFile = "AlgoComparison.json";
+        String jsonFile = "ParameterSweep.json";
         try {
             results.writeJSON(jsonFile, JsonConverter.SUBSET_SOLUTION);
         } catch (IOException ex) {

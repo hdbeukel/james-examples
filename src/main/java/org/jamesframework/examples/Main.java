@@ -133,13 +133,30 @@ public class Main {
                 + "org.jamesframework.examples.tsp2.TSP2 "
                 + "<inputfile> <runtime>");
         System.out.println("");
-        System.out.println("Example 5: comparing algorithm performance");
-        System.out.println("------------------------------------------");
+        System.out.println("Example 5A: parameter sweep");
+        System.out.println("---------------------------");
         System.out.println("");
-        System.out.println("Performs an example analysis using the provided tools from the extensions module. \n"
+        System.out.println("Performs a parameter sweep using the provided tools from the extensions module. \n"
+                         + "The core subset selection problem is used as a case study, and the entry-to-nearest-entry \n"
+                         + "objective from example 1C is maximized. Different Metropolis searches with a range of \n"
+                         + "fixed temperatures are applied to find an appropriate temperature range to be used for a \n"
+                         + "parallel tempering search (see example 5B). Results are written to a file 'ParameterSweep.json'.");
+        System.out.println("");
+        System.out.println("Usage:");
+        System.out.println("");
+        System.out.println("java -cp james-examples.jar "
+                + "org.jamesframework.examples.analysis.ParameterSweep "
+                + "<selection-ratio> <runs> <runtime> <mintemp> <maxtemp> "
+                + "<numsearches> [<inputfile>]+");
+        System.out.println("");
+        System.out.println("Example 5B: comparing algorithm performance");
+        System.out.println("-------------------------------------------");
+        System.out.println("");
+        System.out.println("Compares algorithm performance using the provided tools from the extensions module. \n"
                          + "The core subset selection problem is used as a case study, and the entry-to-nearest-entry \n"
                          + "objective from example 1C is maximized. Both random descent as well as parallel tempering \n"
-                         + "are applied to solve the problem for a series of given data sets.");
+                         + "are applied to solve the problem for a series of given data sets. Results are written to a \n"
+                         + "file 'AlgoComparison.json'.");
         System.out.println("");
         System.out.println("Usage:");
         System.out.println("");
