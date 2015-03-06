@@ -141,8 +141,8 @@ public class AlgoComparison {
         // add parallel tempering
         System.out.println("Add parallel tempering");
         analysis.addSearch("Parallel Tempering", problem -> {
-            double minTemp = 0.00001;
-            double maxTemp = 0.001;
+            double minTemp = 0.000001;
+            double maxTemp = 0.0003;
             int numReplicas = 10;
             Search<SubsetSolution> pt = new ParallelTempering<>(problem,
                                                                 new SingleSwapNeighbourhood(),
