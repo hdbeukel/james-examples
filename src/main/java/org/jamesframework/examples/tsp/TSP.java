@@ -27,7 +27,7 @@ import org.jamesframework.core.search.stopcriteria.MaxRuntime;
 import org.jamesframework.examples.util.ProgressSearchListener;
 
 /**
- * Main class for the travelling salesman example (example 4).
+ * Main class for the travelling salesman example (example 4A).
  * 
  * @author <a href="mailto:herman.debeukelaer@ugent.be">Herman De Beukelaer</a>
  */

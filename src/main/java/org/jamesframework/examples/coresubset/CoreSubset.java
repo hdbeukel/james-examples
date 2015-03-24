@@ -27,7 +27,7 @@ import org.jamesframework.core.search.stopcriteria.MaxRuntime;
 import org.jamesframework.examples.util.ProgressSearchListener;
 
 /**
- * Main class for the basic core subset selection example.
+ * Main class for the basic core subset selection example (example 1A).
  * 
  * @author <a href="mailto:herman.debeukelaer@ugent.be">Herman De Beukelaer</a>
  */

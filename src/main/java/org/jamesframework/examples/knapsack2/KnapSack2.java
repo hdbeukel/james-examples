@@ -29,7 +29,7 @@ import org.jamesframework.core.search.stopcriteria.MaxRuntime;
 import org.jamesframework.examples.util.ProgressSearchListener;
 
 /**
- * Main class for the knapsack example (2).
+ * Main class for the knapsack example (example 2B).
  * 
  * @author <a href="mailto:herman.debeukelaer@ugent.be">Herman De Beukelaer</a>
  */

@@ -29,7 +29,7 @@ public class Main {
         System.out.println("# JAMES EXAMPLES #");
         System.out.println("##################");
         System.out.println("");
-        System.out.println("Example 1: core subset selection");
+        System.out.println("Example 1A: core subset selection");
         System.out.println("--------------------------------");
         System.out.println("");
         System.out.println("Given a distance matrix, sample a subset of fixed size with maximum average \n"
@@ -45,7 +45,7 @@ public class Main {
         System.out.println("Example 1B: core subset selection (2)");
         System.out.println("-------------------------------------");
         System.out.println("");
-        System.out.println("Same problem and algorithm as for example 1, where the objective \n"
+        System.out.println("Same problem and algorithm as for example 1A, where the objective \n"
                          + "has been extended to include an efficient delta evaluation.");
         System.out.println("");
         System.out.println("Usage:");
@@ -69,7 +69,7 @@ public class Main {
                 + "org.jamesframework.examples.coresubset3.CoreSubset3 "
                 + "<inputfile> <subsetsize> <runtime>");
         System.out.println("");
-        System.out.println("Example 2: the 0/1 knapsack problem");
+        System.out.println("Example 2A: the 0/1 knapsack problem");
         System.out.println("-----------------------------------");
         System.out.println("");
         System.out.println("Given a series of items with a specific profit and weight, select a subset \n"
@@ -109,7 +109,7 @@ public class Main {
                 + "org.jamesframework.examples.clique.MaximumClique "
                 + "<inputfile> <maxshake> <runtime>");
         System.out.println("");
-        System.out.println("Example 4: the travelling salesman problem");
+        System.out.println("Example 4A: the travelling salesman problem");
         System.out.println("------------------------------------------");
         System.out.println("");
         System.out.println("This example demonstrates the implementation of the TSP problem, \n"

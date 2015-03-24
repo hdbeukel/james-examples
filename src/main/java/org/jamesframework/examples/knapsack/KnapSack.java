@@ -31,7 +31,7 @@ import org.jamesframework.core.util.SetUtilities;
 import org.jamesframework.examples.util.ProgressSearchListener;
 
 /**
- * Main class for the knapsack example.
+ * Main class for the knapsack example (example 2A).
  * 
  * @author <a href="mailto:herman.debeukelaer@ugent.be">Herman De Beukelaer</a>
  */
