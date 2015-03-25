@@ -135,8 +135,8 @@ public class CoreSubset3 {
             System.out.println("# PARALLEL TEMPERING");
             
             // create parallel tempering search with single swap neighbourhood
-            double minTemp = 0.00001;
-            double maxTemp = 0.001;
+            double minTemp = 1e-8;
+            double maxTemp = 1e-4;
             int numReplicas = 10;
             LocalSearch<SubsetSolution> parallelTempering = new ParallelTempering<>(problem,
                                                                         new SingleSwapNeighbourhood(),
