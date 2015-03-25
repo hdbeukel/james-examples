@@ -6,5 +6,3 @@
 *.log
 *.jar
 *.zip
-!additional-input.zip
-additional-input/
