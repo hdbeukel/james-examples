@@ -93,14 +93,15 @@ public class ParameterSweep {
     private static void run(List<String> filePaths, double selRatio, int runs,
             int timeLimit, double minTemp, double maxTemp, int numSearches){
         
-        // read data sets
+        // read datasets
         System.out.println("# PARSING INPUT");
-        List<CoreSubsetData> dataSets = new ArrayList<>();
+        CoreSubsetFileReader reader = new CoreSubsetFileReader();
+        List<CoreSubsetData> datasets = new ArrayList<>();
         for(String filePath : filePaths){
             System.out.println("Reading file: " + filePath);
             try {
-                CoreSubsetData data = new CoreSubsetFileReader().read(filePath);
-                dataSets.add(data);
+                CoreSubsetData data = reader.read(filePath);
+                datasets.add(data);
             } catch (FileNotFoundException ex) {
                 System.err.println("Failed to read file: " + filePath);
                 System.exit(2);
@@ -112,15 +113,13 @@ public class ParameterSweep {
         
         // initialize analysis object
         Analysis<SubsetSolution> analysis = new Analysis<>();
-        // set number of runs
-        analysis.setNumRuns(runs);
         
         // ADD PROBLEMS (ONE PER DATA SET)
         System.out.println("# ADDING PROBLEMS TO ANALYSIS");
         
-        for(int d=0; d<dataSets.size(); d++){
+        for(int d = 0; d < datasets.size(); d++){
             // create problem
-            CoreSubsetData data = dataSets.get(d);
+            CoreSubsetData data = datasets.get(d);
             // set core size
             int coreSize = (int) Math.round(selRatio * data.getIDs().size());
             SubsetProblem<CoreSubsetData> problem = new SubsetProblem<>(obj, data, coreSize);
@@ -140,7 +139,7 @@ public class ParameterSweep {
         
         double tempDelta = (maxTemp - minTemp)/(numSearches - 1);
         DecimalFormat df = new DecimalFormat("#.################");
-        for(int s=0; s<numSearches; s++){
+        for(int s = 0; s < numSearches; s++){
             // compute temperature
             double temp = minTemp + s * tempDelta;
             // add Metropolis search
@@ -152,10 +151,10 @@ public class ParameterSweep {
                 return ms;
             });
         }
-        
-        // run analysis
-        System.out.format("# RUNNING ANALYSIS (runs per search: %d)\n", runs);
-        
+        // set number of search runs
+        analysis.setNumRuns(runs);
+                
+        // start loader
         Timer loaderTimer = new Timer();
         TimerTask loaderTask = new TimerTask() {
             private char[] loader = new char[40];
@@ -170,6 +169,9 @@ public class ParameterSweep {
             }
         };
         loaderTimer.schedule(loaderTask, 0, 100);
+        
+        // run analysis
+        System.out.format("# RUNNING ANALYSIS (runs per search: %d)\n", runs);
         
         AnalysisResults<SubsetSolution> results = analysis.run();
         
