@@ -1,10 +1,10 @@
 JAMES Examples Module Changes
 =============================
 
-Version 0.2.1 (under development)
----------------------------------
+Version 0.2.1 (02/04/2015)
+--------------------------
 
- - Added examples demonstrating the analysis workflow included in the extensions module.
+ - Added examples demonstrating the analysis workflow from the extensions module.
  - Fixed conflicting logback settings in tests. Settings are now inherited from the core module.
 
 Version 0.2 (12/11/2014)
