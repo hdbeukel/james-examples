@@ -20,12 +20,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import org.jamesframework.core.subset.SubsetSolution;
 import org.jamesframework.core.search.neigh.Move;
 import org.jamesframework.core.search.neigh.Neighbourhood;
 import org.jamesframework.core.subset.neigh.moves.AdditionMove;
+import org.jamesframework.core.util.Randomization;
 
 /**
  * Greedy neighbourhood for the maximum clique problem that generates moves which add a single new vertex that is
@@ -49,7 +49,7 @@ public class GreedyCliqueNeighbourhood implements Neighbourhood<SubsetSolution> 
         if(allMoves.isEmpty()){
             return null;
         } else {
-            Random rg = ThreadLocalRandom.current();
+            Random rg = Randomization.getRandom();
             return allMoves.get(rg.nextInt(allMoves.size()));
         }
     }

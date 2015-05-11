@@ -5,6 +5,7 @@ Version 1.0 (under development)
 -------------------------------
 
  - Compatible with core module v1.0.
+ - Use new `Randomization` tools and demonstrate support for custom global random generator.
  - Moved to SLF4J API 1.7.12.
 
 Version 0.2.1 (02/04/2015)

@@ -19,8 +19,8 @@ package org.jamesframework.examples.tsp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 import org.jamesframework.core.search.neigh.Neighbourhood;
+import org.jamesframework.core.util.Randomization;
 
 /**
  * Basic 2-opt neighbourhood for the TSP problem.
@@ -33,7 +33,7 @@ public class TSP2OptNeighbourhood implements Neighbourhood<TSPSolution>{
     public TSP2OptMove getRandomMove(TSPSolution solution) {
         // pick two distinct random positions i,j in the round trip
         int n = solution.getCities().size();
-        Random rg = ThreadLocalRandom.current();
+        Random rg = Randomization.getRandom();
         int i = rg.nextInt(n);
         int j = rg.nextInt(n-1);
         if(j >= i){

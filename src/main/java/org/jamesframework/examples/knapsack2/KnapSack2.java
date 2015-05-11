@@ -19,7 +19,6 @@ package org.jamesframework.examples.knapsack2;
 import org.jamesframework.examples.knapsack.*;
 import java.io.FileNotFoundException;
 import java.util.Comparator;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import org.jamesframework.core.subset.SubsetProblem;
 import org.jamesframework.core.subset.SubsetSolution;
@@ -34,9 +33,6 @@ import org.jamesframework.examples.util.ProgressSearchListener;
  * @author <a href="mailto:herman.debeukelaer@ugent.be">Herman De Beukelaer</a>
  */
 public class KnapSack2 {
-    
-    // random generator
-    private static final Random RG = new Random();
     
     /**
      * Runs the knapsack problem. Expects three parameters: (1) the input file path, (2) the capacity of the knapsack
