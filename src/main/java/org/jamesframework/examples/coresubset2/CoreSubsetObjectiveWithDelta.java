@@ -126,7 +126,7 @@ public class CoreSubsetObjectiveWithDelta extends CoreSubsetObjective{
         }
         
         // return new evaluation
-        return new SimpleEvaluation(newEval);
+        return SimpleEvaluation.WITH_VALUE(newEval);
         
     }
     

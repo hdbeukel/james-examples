@@ -31,7 +31,7 @@ public class CliqueObjective implements Objective<SubsetSolution, Object>{
 
     @Override
     public Evaluation evaluate(SubsetSolution solution, Object data) {
-        return new SimpleEvaluation(solution.getNumSelectedIDs());
+        return SimpleEvaluation.WITH_VALUE(solution.getNumSelectedIDs());
     }
 
     @Override

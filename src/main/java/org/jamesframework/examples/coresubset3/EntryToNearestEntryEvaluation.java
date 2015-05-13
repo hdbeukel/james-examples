@@ -72,13 +72,17 @@ public class EntryToNearestEntryEvaluation implements Evaluation {
     }
     
     // update closest item
-    public void update(int itemID, int closestOtherItemID, double distance){
-        // update minimum distance sum
-        minDistSum -= minDistMap.get(itemID);
-        minDistSum += distance;
-        // update metadata
-        closestItemMap.put(itemID, closestOtherItemID);
-        minDistMap.put(itemID, distance);
+    public boolean update(int itemID, int closestOtherItemID, double distance){
+        if(closestItemMap.containsKey(itemID)){
+            // update minimum distance sum
+            minDistSum -= minDistMap.get(itemID);
+            minDistSum += distance;
+            // update metadata
+            closestItemMap.put(itemID, closestOtherItemID);
+            minDistMap.put(itemID, distance);
+            return true;
+        }
+        return false;
     }
     
     // get closest item (null of no closest item registered)

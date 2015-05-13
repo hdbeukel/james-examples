@@ -191,19 +191,20 @@ public class TSP2 {
         }
         
     }
-    
+
+    // compute average travel distance for symmetric distance matrix
     private static double computeAverageTravelDistance(TSPData data){
         Set<Integer> ids = data.getIDs();
         double sum = 0.0;
         for(int id1 : ids){
             for(int id2 : ids) {
-                if(id1 != id2){
+                if(id1 < id2){
                     sum += data.getDistance(id1, id2);
                 }
             }
         }
         int n = ids.size();
-        int numDistances = n*(n-1);
+        int numDistances = n*(n-1)/2;
         return sum/numDistances;
     }
     

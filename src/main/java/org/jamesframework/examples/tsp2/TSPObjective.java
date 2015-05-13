@@ -22,7 +22,6 @@ import org.jamesframework.core.problems.objectives.Objective;
 import org.jamesframework.core.problems.objectives.evaluations.Evaluation;
 import org.jamesframework.core.problems.objectives.evaluations.SimpleEvaluation;
 import org.jamesframework.core.search.neigh.Move;
-import org.jamesframework.examples.tsp.TSP2OptMove;
 import org.jamesframework.ext.permutation.PermutationSolution;
 import org.jamesframework.ext.permutation.neigh.moves.ReverseSubsequenceMove;
 
@@ -45,7 +44,7 @@ public class TSPObjective implements Objective<PermutationSolution, TSPData>{
             totalDistance += data.getDistance(fromCity, toCity);
         }
         // wrap in simple evaluation
-        return new SimpleEvaluation(totalDistance);
+        return SimpleEvaluation.WITH_VALUE(totalDistance);
     }
 
     @Override
@@ -64,7 +63,7 @@ public class TSPObjective implements Objective<PermutationSolution, TSPData>{
         int n = curSolution.size();
         
         if((to+1)%n == from){
-            // special case: entire sequence reversed
+            // special case: entire round trip reversed
             return curEvaluation;
         } else {
             // get current total travel distance
@@ -87,7 +86,7 @@ public class TSPObjective implements Objective<PermutationSolution, TSPData>{
             totalDistance += data.getDistance(firstReversed, afterReversed);
 
             // return updated travel distance
-            return new SimpleEvaluation(totalDistance);
+            return SimpleEvaluation.WITH_VALUE(totalDistance);
         }
         
     }

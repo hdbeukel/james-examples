@@ -36,7 +36,7 @@ public class KnapsackObjective implements Objective<SubsetSolution, KnapsackData
         // compute sum of profits of selected items
         double value =  solution.getSelectedIDs().stream().mapToDouble(data::getProfit).sum();
         // wrap in simple evaluation object
-        return new SimpleEvaluation(value);
+        return SimpleEvaluation.WITH_VALUE(value);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class KnapsackObjective implements Objective<SubsetSolution, KnapsackData
         // account for removed items
         value -= subsetMove.getDeletedIDs().stream().mapToDouble(data::getProfit).sum();
         // return updated evaluation
-        return new SimpleEvaluation(value);
+        return SimpleEvaluation.WITH_VALUE(value);
     }    
 
     @Override

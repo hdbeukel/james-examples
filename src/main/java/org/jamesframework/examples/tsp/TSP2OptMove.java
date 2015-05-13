@@ -77,4 +77,26 @@ public class TSP2OptMove implements Move<TSPSolution> {
         apply(solution);
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 97 * hash + i;
+        hash = 97 * hash + j;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final TSP2OptMove other = (TSP2OptMove) obj;
+        return this.i == other.i && this.j == other.j;
+    }
+    
+    
+
 }

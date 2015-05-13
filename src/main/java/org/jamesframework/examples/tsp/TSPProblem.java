@@ -26,6 +26,7 @@ import org.jamesframework.core.problems.constraints.validations.Validation;
 import org.jamesframework.core.problems.objectives.evaluations.Evaluation;
 import org.jamesframework.core.problems.objectives.evaluations.SimpleEvaluation;
 import org.jamesframework.core.search.neigh.Move;
+import org.jamesframework.core.util.Randomization;
 
 /**
  * Specification of the travelling salesman problem. Each city is identified using a unique integer value.
@@ -63,12 +64,12 @@ public class TSPProblem implements Problem<TSPSolution>{
             totalDistance += dist[fromCity][toCity];
         }
         // wrap in simple evaluation
-        return new SimpleEvaluation(totalDistance);
+        return SimpleEvaluation.WITH_VALUE(totalDistance);
     }
     
     @Override
     public Evaluation evaluate(Move move, TSPSolution curSolution, Evaluation curEvaluation){
-        
+                
         // check move type
         if(!(move instanceof TSP2OptMove)){
             throw new IncompatibleDeltaEvaluationException("Delta evaluation in TSP problem expects move of type TSP2OptMove.");
@@ -82,7 +83,7 @@ public class TSPProblem implements Problem<TSPSolution>{
         int n = getNumCities();
         
         if((j+1)%n == i){
-            // special case: entire sequence reversed
+            // special case: entire round trip reversed
             return curEvaluation;
         } else {
             // get current total travel distance
@@ -105,7 +106,7 @@ public class TSPProblem implements Problem<TSPSolution>{
             totalDistance += dist[firstReversed][afterReversed];
 
             // return updated travel distance
-            return new SimpleEvaluation(totalDistance);
+            return SimpleEvaluation.WITH_VALUE(totalDistance);
         }
         
     }
@@ -130,7 +131,7 @@ public class TSPProblem implements Problem<TSPSolution>{
         for(int i=0; i<n; i++){
             cities.add(i);
         }
-        Collections.shuffle(cities);
+        Collections.shuffle(cities, Randomization.getRandom());
         // create and return TSP solution
         return new TSPSolution(cities);
     }

@@ -55,7 +55,7 @@ public class CoreSubsetObjective implements Objective<SubsetSolution, CoreSubset
             }
             value = sumDist/numDist;
         }
-        return new SimpleEvaluation(value);
+        return SimpleEvaluation.WITH_VALUE(value);
     }
     
     /**

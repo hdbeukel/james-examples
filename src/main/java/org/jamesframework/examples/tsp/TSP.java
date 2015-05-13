@@ -176,18 +176,17 @@ public class TSP {
         
     }
     
+    // compute average travel distance for symmetric distance matrix
     private static double computeAverageTravelDistance(TSPProblem problem){
         int n = problem.getNumCities();
         double[][] d = problem.getDistanceMatrix();
         double sum = 0.0;
         for(int i=0; i<n; i++){
-            for(int j=0; j<n; j++) {
-                if(i != j){
-                    sum += d[i][j];
-                }
+            for(int j=i+1; j<n; j++) {
+                sum += d[i][j];
             }
         }
-        int numDistances = n*(n-1);
+        int numDistances = n*(n-1)/2;
         return sum/numDistances;
     }
     
