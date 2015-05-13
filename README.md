@@ -1,6 +1,7 @@
 JAMES Examples Module
 =====================
 
+[![Build Status](https://img.shields.io/travis/hdbeukel/james-examples.svg?style=flat)](https://travis-ci.org/hdbeukel/james-examples)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.jamesframework/james-examples/badge.svg?style=flat)](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22james-examples%22)
 
 The JAMES examples module is part of the [JAMES framework][james-github].
