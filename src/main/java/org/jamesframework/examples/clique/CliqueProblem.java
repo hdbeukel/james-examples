@@ -16,6 +16,7 @@
 
 package org.jamesframework.examples.clique;
 
+import java.util.Random;
 import org.jamesframework.core.problems.AbstractProblem;
 import org.jamesframework.core.problems.objectives.Objective;
 
@@ -31,7 +32,7 @@ public class CliqueProblem extends AbstractProblem<CliqueSolution, CliqueData>{
     }
 
     @Override
-    public CliqueSolution createRandomSolution() {
+    public CliqueSolution createRandomSolution(Random rnd) {
         throw new UnsupportedOperationException("Creating a random clique is not supported.");
     }
 

@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import org.jamesframework.core.search.neigh.Neighbourhood;
-import org.jamesframework.core.util.Randomization;
 
 /**
  * Basic 2-opt neighbourhood for the TSP problem.
@@ -30,12 +29,11 @@ import org.jamesframework.core.util.Randomization;
 public class TSP2OptNeighbourhood implements Neighbourhood<TSPSolution>{
     
     @Override
-    public TSP2OptMove getRandomMove(TSPSolution solution) {
+    public TSP2OptMove getRandomMove(TSPSolution solution, Random rnd) {
         // pick two distinct random positions i,j in the round trip
         int n = solution.getCities().size();
-        Random rg = Randomization.getRandom();
-        int i = rg.nextInt(n);
-        int j = rg.nextInt(n-1);
+        int i = rnd.nextInt(n);
+        int j = rnd.nextInt(n-1);
         if(j >= i){
             j++;
         }

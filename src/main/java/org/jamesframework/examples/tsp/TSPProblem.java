@@ -19,6 +19,7 @@ package org.jamesframework.examples.tsp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import org.jamesframework.core.exceptions.IncompatibleDeltaEvaluationException;
 import org.jamesframework.core.problems.Problem;
 import org.jamesframework.core.problems.constraints.validations.SimpleValidation;
@@ -26,7 +27,6 @@ import org.jamesframework.core.problems.constraints.validations.Validation;
 import org.jamesframework.core.problems.objectives.evaluations.Evaluation;
 import org.jamesframework.core.problems.objectives.evaluations.SimpleEvaluation;
 import org.jamesframework.core.search.neigh.Move;
-import org.jamesframework.core.util.Randomization;
 
 /**
  * Specification of the travelling salesman problem. Each city is identified using a unique integer value.
@@ -124,14 +124,14 @@ public class TSPProblem implements Problem<TSPSolution>{
     }
 
     @Override
-    public TSPSolution createRandomSolution() {
+    public TSPSolution createRandomSolution(Random rnd) {
         // create random permutation of cities
         List<Integer> cities = new ArrayList<>();
         int n = dist.length;
         for(int i=0; i<n; i++){
             cities.add(i);
         }
-        Collections.shuffle(cities, Randomization.getRandom());
+        Collections.shuffle(cities, rnd);
         // create and return TSP solution
         return new TSPSolution(cities);
     }

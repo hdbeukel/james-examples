@@ -27,7 +27,6 @@ import org.jamesframework.core.search.algo.ParallelTempering;
 import org.jamesframework.core.search.algo.RandomDescent;
 import org.jamesframework.core.subset.neigh.SinglePerturbationNeighbourhood;
 import org.jamesframework.core.search.stopcriteria.MaxRuntime;
-import org.jamesframework.core.util.Randomization;
 import org.jamesframework.core.util.SetUtilities;
 import org.jamesframework.examples.util.ProgressSearchListener;
 
@@ -37,6 +36,8 @@ import org.jamesframework.examples.util.ProgressSearchListener;
  * @author <a href="mailto:herman.debeukelaer@ugent.be">Herman De Beukelaer</a>
  */
 public class KnapSack {
+    
+    private static final Random RG = new Random();
     
     /**
      * Runs the knapsack problem. Expects three parameters: (1) the input file path, (2) the capacity of the knapsack
@@ -213,23 +214,21 @@ public class KnapSack {
     
     // create a custom initial solution that does not exceed the knapsack capacity
     private static SubsetSolution createInitialSolution(Problem<SubsetSolution> problem, KnapsackData data, double capacity){
-        // retrieve random generator
-        Random rg = Randomization.getRandom();
         // 1: create random initial solution
-        SubsetSolution initialSolution = problem.createRandomSolution();
+        SubsetSolution initialSolution = problem.createRandomSolution(RG);
         // 2: compute current total weight
         double weight = computeSelectionWeight(initialSolution, data);
         // 3: remove random items as long as total weight is larger than the capacity
         while(weight > capacity){
-            int id = SetUtilities.getRandomElement(initialSolution.getSelectedIDs(), rg);
+            int id = SetUtilities.getRandomElement(initialSolution.getSelectedIDs(), RG);
             initialSolution.deselect(id);
             weight -= data.getWeight(id);
         }
         // 4: retain random subset to increase randomness
-        int finalSize = rg.nextInt(initialSolution.getNumSelectedIDs()+1);
+        int finalSize = RG.nextInt(initialSolution.getNumSelectedIDs()+1);
         initialSolution.deselectAll(SetUtilities.getRandomSubset(initialSolution.getSelectedIDs(),
                                                                  initialSolution.getNumSelectedIDs()-finalSize,
-                                                                 rg));
+                                                                 RG));
         return initialSolution;
     }
     

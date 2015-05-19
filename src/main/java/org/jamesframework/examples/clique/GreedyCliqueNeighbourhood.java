@@ -25,7 +25,6 @@ import org.jamesframework.core.subset.SubsetSolution;
 import org.jamesframework.core.search.neigh.Move;
 import org.jamesframework.core.search.neigh.Neighbourhood;
 import org.jamesframework.core.subset.neigh.moves.AdditionMove;
-import org.jamesframework.core.util.Randomization;
 
 /**
  * Greedy neighbourhood for the maximum clique problem that generates moves which add a single new vertex that is
@@ -44,13 +43,12 @@ public class GreedyCliqueNeighbourhood implements Neighbourhood<SubsetSolution> 
     }
     
     @Override
-    public Move<SubsetSolution> getRandomMove(SubsetSolution solution) {
+    public Move<SubsetSolution> getRandomMove(SubsetSolution solution, Random rnd) {
         List<Move<SubsetSolution>> allMoves = getAllMoves(solution);
         if(allMoves.isEmpty()){
             return null;
         } else {
-            Random rg = Randomization.getRandom();
-            return allMoves.get(rg.nextInt(allMoves.size()));
+            return allMoves.get(rnd.nextInt(allMoves.size()));
         }
     }
 

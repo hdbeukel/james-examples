@@ -24,7 +24,6 @@ import org.jamesframework.core.subset.SubsetSolution;
 import org.jamesframework.core.search.neigh.Move;
 import org.jamesframework.core.search.neigh.Neighbourhood;
 import org.jamesframework.core.subset.neigh.moves.AdditionMove;
-import org.jamesframework.core.util.Randomization;
 
 /**
  * Alternative implementation of greedy clique neighbourhood that uses the optimized clique solution type
@@ -41,13 +40,12 @@ public class GreedyCliqueNeighbourhood2 implements Neighbourhood<CliqueSolution>
     }
     
     @Override
-    public Move<SubsetSolution> getRandomMove(CliqueSolution clique) {
+    public Move<SubsetSolution> getRandomMove(CliqueSolution clique, Random rnd) {
         List<Move<SubsetSolution>> allMoves = getAllMoves(clique);
         if(allMoves.isEmpty()){
             return null;
         } else {
-            Random rg = Randomization.getRandom();
-            return allMoves.get(rg.nextInt(allMoves.size()));
+            return allMoves.get(rnd.nextInt(allMoves.size()));
         }
     }
 
