@@ -137,19 +137,17 @@ public class KnapSack {
             
             System.out.println("# PARALLEL TEMPERING");
             
+            // set temperature range, scaled according to average profit of knapsack items
+            double scale = computeAverageProfit(data);
+            double minTemp = scale * 0.001;
+            double maxTemp = scale * 0.1;
             // create parallel tempering with single perturbation neighbourhood
-            double minTemp = 0.001;
-            double maxTemp = 0.1;
             int numReplicas = 10;
             ParallelTempering<SubsetSolution> parallelTempering = new ParallelTempering<>(problem,
                                                                         new SinglePerturbationNeighbourhood(),
                                                                         numReplicas, minTemp, maxTemp);
-            // scale temperatures according to average profit of knapsack items
-            double scale = computeAverageProfit(data);
-            parallelTempering.setTemperatureScaleFactor(scale);
             System.out.println("Min. temperature: " + minTemp);
             System.out.println("Max. temperature: " + maxTemp);
-            System.out.println("Temperature scale: " + scale);
             
             // set maximum runtime
             parallelTempering.addStopCriterion(new MaxRuntime(timeLimit, TimeUnit.SECONDS));

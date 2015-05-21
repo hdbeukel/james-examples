@@ -127,18 +127,17 @@ public class TSP2 {
             
             System.out.println("# PARALLEL TEMPERING");
             
-            // create parallel tempering search with with neighbourhood that reverses a subsequence (2-opt move)
-            double minTemp = 0.001;
-            double maxTemp = 0.1;
+            // set temperature range, scaled according to average travel disctance between cities
+            double scale = computeAverageTravelDistance(data);
+            double minTemp = scale * 0.001;
+            double maxTemp = scale * 0.1;
+            // create parallel tempering search with neighbourhood that reverses a subsequence (2-opt move)
             int numReplicas = 10;
             ParallelTempering<PermutationSolution> parallelTempering = new ParallelTempering<>(
                                                                         problem,
                                                                         new ReverseSubsequenceNeighbourhood(),
                                                                         numReplicas, minTemp, maxTemp
                                                                        );
-            // scale temperatures according to average travel distance between cities
-            double scale = computeAverageTravelDistance(data);
-            parallelTempering.setTemperatureScaleFactor(scale);
             
             // set maximum runtime
             parallelTempering.addStopCriterion(new MaxRuntime(timeLimit, TimeUnit.SECONDS));

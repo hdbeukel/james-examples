@@ -110,19 +110,18 @@ public class TSP {
             /**********************/
             
             System.out.println("# PARALLEL TEMPERING");
-            
+
+            // set temperature range, scaled according to average travel disctance between cities
+            double scale = computeAverageTravelDistance(problem);
+            double minTemp = scale * 0.001;
+            double maxTemp = scale * 0.1;
             // create parallel tempering search with TSP neighbourhood
-            double minTemp = 0.001;
-            double maxTemp = 0.1;
             int numReplicas = 10;
             ParallelTempering<TSPSolution> parallelTempering = new ParallelTempering<>(
                                                                     problem,
                                                                     new TSP2OptNeighbourhood(),
                                                                     numReplicas, minTemp, maxTemp
                                                                );
-            // scale temperatures according to average travel distance between cities
-            double scale = computeAverageTravelDistance(problem);
-            parallelTempering.setTemperatureScaleFactor(scale);
             
             // set maximum runtime
             parallelTempering.addStopCriterion(new MaxRuntime(timeLimit, TimeUnit.SECONDS));
