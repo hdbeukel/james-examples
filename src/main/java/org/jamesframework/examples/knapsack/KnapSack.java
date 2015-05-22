@@ -19,8 +19,10 @@ package org.jamesframework.examples.knapsack;
 import java.io.FileNotFoundException;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+import org.jamesframework.core.factory.MetropolisSearchFactory;
 import org.jamesframework.core.problems.Problem;
 import org.jamesframework.core.problems.objectives.evaluations.Evaluation;
+import org.jamesframework.core.search.algo.MetropolisSearch;
 import org.jamesframework.core.subset.SubsetProblem;
 import org.jamesframework.core.subset.SubsetSolution;
 import org.jamesframework.core.search.algo.ParallelTempering;
@@ -108,9 +110,7 @@ public class KnapSack {
             // attach listener
             randomDescent.addSearchListener(new ProgressSearchListener());
             // IMPORTANT: set valid initial solution
-            SubsetSolution initialSolution = createInitialSolution(problem, data, capacity);
-            System.out.println("Initial solution size: " + initialSolution.getNumSelectedIDs());
-            randomDescent.setCurrentSolution(initialSolution);
+            randomDescent.setCurrentSolution(createInitialSolution(problem, data, capacity));
 
             // start search
             randomDescent.start();
@@ -141,11 +141,22 @@ public class KnapSack {
             double scale = computeAverageProfit(data);
             double minTemp = scale * 0.001;
             double maxTemp = scale * 0.1;
-            // create parallel tempering with single perturbation neighbourhood
+            // create parallel tempering with:
+            //  - single perturbation neighbourhood
+            //  - custom Metropolis search factory to set independently
+            //    generated valid initial solution in each replica
             int numReplicas = 10;
+            MetropolisSearchFactory<SubsetSolution> replicaFactory = (prob, neigh, temp) -> {
+                // create Metropolis search with requested parameters
+                MetropolisSearch<SubsetSolution> metropolis = new MetropolisSearch<>(prob, neigh, temp);
+                // set valid initial solution
+                metropolis.setCurrentSolution(createInitialSolution(prob, data, capacity));
+                return metropolis;
+            };
             ParallelTempering<SubsetSolution> parallelTempering = new ParallelTempering<>(problem,
                                                                         new SinglePerturbationNeighbourhood(),
-                                                                        numReplicas, minTemp, maxTemp);
+                                                                        numReplicas, minTemp, maxTemp,
+                                                                        replicaFactory);
             System.out.println("Min. temperature: " + minTemp);
             System.out.println("Max. temperature: " + maxTemp);
             
@@ -153,10 +164,6 @@ public class KnapSack {
             parallelTempering.addStopCriterion(new MaxRuntime(timeLimit, TimeUnit.SECONDS));
             // attach listener
             parallelTempering.addSearchListener(new ProgressSearchListener());
-            // IMPORTANT: set valid initial solution
-            initialSolution = createInitialSolution(problem, data, capacity);
-            System.out.println("Initial solution size: " + initialSolution.getNumSelectedIDs());
-            parallelTempering.setCurrentSolution(initialSolution);
             
             // start search
             parallelTempering.start();
