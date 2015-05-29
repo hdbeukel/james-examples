@@ -118,6 +118,12 @@ public class TSPProblem implements Problem<TSPSolution>{
     }
 
     @Override
+    public Validation validate(Move move, TSPSolution curSolution, Validation curValidation) {
+        // no constraints
+        return SimpleValidation.PASSED;
+    }
+
+    @Override
     public boolean isMinimizing() {
         // total travel distance is to be minimized
         return true;
