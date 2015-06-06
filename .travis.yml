@@ -12,6 +12,9 @@ env:
     - SONATYPE_USERNAME=hdbeukel
     - secure: KHTNMziEQ6YQx/v7rw291EMo8V3qZmrw71q9XUfvLpXI+OQ2TINoaibEXgR/9PEwobxJNlVDWysshzfMzsKeMfcT584WcjnYmIyeq5rPOnpnLYhffqC65Cu/I+BC9GRtk1AEVeipMYRXLnvqx8z4AgGaH+5L3pfnaXrYyqKeDCY=
 
+script:
+  - mvn install -B
+
 after_success:
   - python .travis/add-sonatype-server.py
-  - mvn clean deploy -DskipTests=true --settings ~/.m2/mySettings.xml
+  - mvn clean deploy -B -DskipTests=true --settings ~/.m2/mySettings.xml
