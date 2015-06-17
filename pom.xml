@@ -10,7 +10,7 @@
     </parent>
     <!-- james examples specifications -->
     <artifactId>james-examples</artifactId>
-    <version>1.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>james-examples</name>
     <description>
