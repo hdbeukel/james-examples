@@ -181,7 +181,7 @@ public class AlgoComparison {
         
         // write to JSON
         System.out.println("# WRITING JSON FILE");
-        String jsonFile = "AlgoComparison.json";
+        String jsonFile = "comparison.json";
         try {
             results.writeJSON(jsonFile, JsonConverter.SUBSET_SOLUTION);
         } catch (IOException ex) {

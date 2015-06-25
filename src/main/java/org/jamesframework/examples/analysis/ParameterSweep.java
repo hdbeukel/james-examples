@@ -182,7 +182,7 @@ public class ParameterSweep {
         
         // write to JSON
         System.out.println("# WRITING JSON FILE");
-        String jsonFile = "ParameterSweep.json";
+        String jsonFile = "sweep.json";
         try {
             results.writeJSON(jsonFile, JsonConverter.SUBSET_SOLUTION);
         } catch (IOException ex) {
