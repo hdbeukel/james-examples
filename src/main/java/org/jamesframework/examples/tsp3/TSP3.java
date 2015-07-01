@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.jamesframework.examples.tsp2;
+package org.jamesframework.examples.tsp3;
 
 import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
@@ -37,7 +37,7 @@ import org.jamesframework.ext.permutation.neigh.ReverseSubsequenceNeighbourhood;
  * 
  * @author <a href="mailto:herman.debeukelaer@ugent.be">Herman De Beukelaer</a>
  */
-public class TSP2 {
+public class TSP3 {
     
     /**
      * Solves a (symmetric) travelling salesman problem. Expects two parameters: (1) the input file path and
@@ -50,11 +50,11 @@ public class TSP2 {
      */
     public static void main(String[] args) {
         System.out.println("###################################");
-        System.out.println("# TRAVELLING SALESMAN PROBLEM (2) #");
+        System.out.println("# TRAVELLING SALESMAN PROBLEM (3) #");
         System.out.println("###################################");
         // parse arguments
         if(args.length != 2){
-            System.err.println("Usage: java -cp james-examples.jar org.jamesframework.examples.tsp2.TSP2 <inputfile> <runtime>");
+            System.err.println("Usage: java -cp james-examples.jar org.jamesframework.examples.tsp3.TSP3 <inputfile> <runtime>");
             System.exit(1);
         }
         String filePath = args[0];

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.jamesframework.examples.tsp2;
+package org.jamesframework.examples.tsp3;
 
 import java.util.HashSet;
 import java.util.Set;

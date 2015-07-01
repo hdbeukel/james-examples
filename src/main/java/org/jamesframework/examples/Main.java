@@ -17,7 +17,7 @@
 package org.jamesframework.examples;
 
 /**
- * Main class of the James examples module that prints an overview of the
+ * Main class of the JAMES examples module that prints an overview of the
  * implemented examples when running Java on the distrubuted JAR-file.
  * 
  * @author <a href="mailto:herman.debeukelaer@ugent.be">Herman De Beukelaer</a>
@@ -121,16 +121,16 @@ public class Main {
                 + "org.jamesframework.examples.tsp.TSP "
                 + "<inputfile> <runtime>");
         System.out.println("");
-        System.out.println("Example 4B: the travelling salesman problem (2)");
+        System.out.println("Example 4C: the travelling salesman problem (3)");
         System.out.println("-----------------------------------------------");
         System.out.println("");
-        System.out.println("Reconsiders implementing TSP using the predefined components for \n"
-                         + "permutation problems from the James extensions module.");
+        System.out.println("Reconsiders implementing TSP using the generic components for \n"
+                         + "permutation problems as defined in the extensions module.");
         System.out.println("");
         System.out.println("Usage:");
         System.out.println("");
         System.out.println("java -cp james-examples.jar "
-                + "org.jamesframework.examples.tsp2.TSP2 "
+                + "org.jamesframework.examples.tsp3.TSP3 "
                 + "<inputfile> <runtime>");
         System.out.println("");
         System.out.println("Example 5A: parameter sweep");

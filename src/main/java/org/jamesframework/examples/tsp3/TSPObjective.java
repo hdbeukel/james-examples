@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.jamesframework.examples.tsp2;
+package org.jamesframework.examples.tsp3;
 
 import java.util.List;
 import org.jamesframework.core.exceptions.IncompatibleDeltaEvaluationException;
