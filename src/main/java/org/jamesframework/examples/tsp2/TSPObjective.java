@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.jamesframework.examples.tsp3;
+package org.jamesframework.examples.tsp2;
 
 import java.util.List;
 import org.jamesframework.core.exceptions.IncompatibleDeltaEvaluationException;
@@ -22,7 +22,7 @@ import org.jamesframework.core.problems.objectives.Objective;
 import org.jamesframework.core.problems.objectives.evaluations.Evaluation;
 import org.jamesframework.core.problems.objectives.evaluations.SimpleEvaluation;
 import org.jamesframework.core.search.neigh.Move;
-import org.jamesframework.ext.permutation.PermutationSolution;
+import org.jamesframework.examples.tsp.TSPSolution;
 import org.jamesframework.ext.permutation.neigh.moves.ReverseSubsequenceMove;
 
 /**
@@ -30,12 +30,12 @@ import org.jamesframework.ext.permutation.neigh.moves.ReverseSubsequenceMove;
  * 
  * @author <a href="mailto:herman.debeukelaer@ugent.be">Herman De Beukelaer</a>
  */
-public class TSPObjective implements Objective<PermutationSolution, TSPData>{
+public class TSPObjective implements Objective<TSPSolution, TSPData>{
 
     @Override
-    public Evaluation evaluate(PermutationSolution solution, TSPData data) {
+    public Evaluation evaluate(TSPSolution solution, TSPData data) {
         // compute sum of travel distances
-        List<Integer> cities = solution.getOrder();
+        List<Integer> cities = solution.getCities();
         int n = cities.size();
         double totalDistance = 0.0;
         for(int i=0; i<n; i++){
@@ -48,7 +48,7 @@ public class TSPObjective implements Objective<PermutationSolution, TSPData>{
     }
 
     @Override
-    public Evaluation evaluate(Move move, PermutationSolution curSolution, Evaluation curEvaluation, TSPData data){
+    public Evaluation evaluate(Move move, TSPSolution curSolution, Evaluation curEvaluation, TSPData data){
         
         // check move type
         if(!(move instanceof ReverseSubsequenceMove)){
@@ -60,7 +60,7 @@ public class TSPObjective implements Objective<PermutationSolution, TSPData>{
         int from = move2opt.getFrom();
         int to = move2opt.getTo();
         // get number of cities
-        int n = curSolution.size();
+        int n = data.getNumCities();
         
         if((to+1)%n == from){
             // special case: entire round trip reversed
@@ -69,7 +69,7 @@ public class TSPObjective implements Objective<PermutationSolution, TSPData>{
             // get current total travel distance
             double totalDistance = curEvaluation.getValue();
             // get current order of cities
-            List<Integer> cities = curSolution.getOrder();
+            List<Integer> cities = curSolution.getCities();
 
             // get crucial cities (at boundary of reversed subsequence)
             int beforeReversed = cities.get((from-1+n)%n);

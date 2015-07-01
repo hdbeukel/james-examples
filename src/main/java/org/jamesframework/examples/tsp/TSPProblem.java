@@ -29,9 +29,9 @@ import org.jamesframework.core.problems.objectives.evaluations.SimpleEvaluation;
 import org.jamesframework.core.search.neigh.Move;
 
 /**
- * Specification of the travelling salesman problem. Each city is identified using a unique integer value.
- * The input consists of a distance matrix that contains the travel distance from each city to each other
- * city. The solution type of the problem is set to {@link TSPSolution}.
+ * Specification of the travelling salesman problem. Each city is represented by a unique integer value.
+ * The corresponding solution type is the custom {@link TSPSolution}. The input consists of a distance
+ * matrix that contains the travel distance between each pair of cities. 
  * 
  * @author <a href="mailto:herman.debeukelaer@ugent.be">Herman De Beukelaer</a>
  */

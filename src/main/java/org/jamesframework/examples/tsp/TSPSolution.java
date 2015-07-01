@@ -22,7 +22,9 @@ import java.util.Objects;
 import org.jamesframework.core.problems.Solution;
 
 /**
- * Represent a solution to the travelling salesman problem. Each city is identified with a unique integer value.
+ * Represent a solution to the travelling salesman problem.
+ * Each city is represented by a unique integer value, corresponding
+ * to the row and column indices in the travel distance matrix.
  * 
  * @author <a href="mailto:herman.debeukelaer@ugent.be">Herman De Beukelaer</a>
  */

@@ -25,7 +25,7 @@ import java.util.Scanner;
  * 
  * @author <a href="mailto:herman.debeukelaer@ugent.be">Herman De Beukelaer</a>
  */
-public class TSPFileReader2 {
+public class TSPFileReader {
     
     /**
      * Read a (symmetric) distance matrix from a text file and create the corresponding TSP data.

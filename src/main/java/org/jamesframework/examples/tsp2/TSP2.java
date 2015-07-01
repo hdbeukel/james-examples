@@ -14,30 +14,29 @@
  * limitations under the License.
  */
 
-package org.jamesframework.examples.tsp3;
+package org.jamesframework.examples.tsp2;
 
 import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import org.jamesframework.core.problems.AbstractProblem;
 import org.jamesframework.core.problems.objectives.evaluations.Evaluation;
 import org.jamesframework.core.search.LocalSearch;
 import org.jamesframework.core.search.algo.ParallelTempering;
 import org.jamesframework.core.search.algo.RandomDescent;
 import org.jamesframework.core.search.stopcriteria.MaxRuntime;
+import org.jamesframework.examples.tsp.TSP2OptNeighbourhood;
+import org.jamesframework.examples.tsp.TSPSolution;
 import org.jamesframework.examples.util.ProgressSearchListener;
-import org.jamesframework.ext.permutation.PermutationProblem;
-import org.jamesframework.ext.permutation.PermutationSolution;
-import org.jamesframework.ext.permutation.neigh.ReverseSubsequenceNeighbourhood;
 
 /**
- * Main class for the travelling salesman example (example 4C).
- * This version uses the predefined components for permutation problems
- * from the James extensions module.
+ * Main class for the travelling salesman example (example 4B).
+ * This version implements the problem by extending {@link AbstractProblem}
+ * to separate the data from the objective (and possible constraints).
  * 
  * @author <a href="mailto:herman.debeukelaer@ugent.be">Herman De Beukelaer</a>
  */
-public class TSP3 {
+public class TSP2 {
     
     /**
      * Solves a (symmetric) travelling salesman problem. Expects two parameters: (1) the input file path and
@@ -50,11 +49,11 @@ public class TSP3 {
      */
     public static void main(String[] args) {
         System.out.println("###################################");
-        System.out.println("# TRAVELLING SALESMAN PROBLEM (3) #");
+        System.out.println("# TRAVELLING SALESMAN PROBLEM (2) #");
         System.out.println("###################################");
         // parse arguments
         if(args.length != 2){
-            System.err.println("Usage: java -cp james-examples.jar org.jamesframework.examples.tsp3.TSP3 <inputfile> <runtime>");
+            System.err.println("Usage: java -cp james-examples.jar org.jamesframework.examples.tsp2.TSP2 <inputfile> <runtime>");
             System.exit(1);
         }
         String filePath = args[0];
@@ -77,17 +76,14 @@ public class TSP3 {
             /* PROBLEM SPECIFICATION */
             /*************************/
             
-            // read TSP data from file
+            // read data (distance matrix)
             TSPData data = new TSPFileReader().read(filePath);
-            // create objective
-            TSPObjective obj = new TSPObjective();
+            // wrap data in TSP problem
+            TSPProblem problem = new TSPProblem(data);        
             
-            // wrap data and objective in permutation problem
-            PermutationProblem<TSPData> problem = new PermutationProblem<>(obj, data);
-                    
             System.out.println("# OPTIMIZING TSP ROUND TRIP");
 
-            System.out.println("Number of cities: " + data.getIDs().size());
+            System.out.println("Number of cities: " + data.getNumCities());
             System.out.println("Time limit: " + timeLimit + " seconds");
             
             /******************/
@@ -96,8 +92,8 @@ public class TSP3 {
 
             System.out.println("# RANDOM DESCENT");
             
-            // create random descent search with neighbourhood that reverses a subsequence (2-opt move)
-            LocalSearch<PermutationSolution> randomDescent = new RandomDescent<>(problem, new ReverseSubsequenceNeighbourhood());
+            // create random descent search with TSP neighbourhood
+            LocalSearch<TSPSolution> randomDescent = new RandomDescent<>(problem, new TSP2OptNeighbourhood());
             // set maximum runtime
             randomDescent.addStopCriterion(new MaxRuntime(timeLimit, TimeUnit.SECONDS));
             // attach listener
@@ -110,7 +106,7 @@ public class TSP3 {
             Evaluation randomDescentBestEval = null;
             if(randomDescent.getBestSolution() != null){
                 System.out.println("Best round trip: "
-                                        + randomDescent.getBestSolution().getOrder());
+                                        + randomDescent.getBestSolution().getCities());
                 randomDescentBestEval = randomDescent.getBestSolutionEvaluation();
                 System.out.println("Best round trip travel distance: "
                                         + randomDescentBestEval);
@@ -126,18 +122,18 @@ public class TSP3 {
             /**********************/
             
             System.out.println("# PARALLEL TEMPERING");
-            
+
             // set temperature range, scaled according to average travel disctance between cities
             double scale = computeAverageTravelDistance(data);
             double minTemp = scale * 0.001;
             double maxTemp = scale * 0.1;
-            // create parallel tempering search with neighbourhood that reverses a subsequence (2-opt move)
+            // create parallel tempering search with TSP neighbourhood
             int numReplicas = 10;
-            ParallelTempering<PermutationSolution> parallelTempering = new ParallelTempering<>(
-                                                                        problem,
-                                                                        new ReverseSubsequenceNeighbourhood(),
-                                                                        numReplicas, minTemp, maxTemp
-                                                                       );
+            ParallelTempering<TSPSolution> parallelTempering = new ParallelTempering<>(
+                                                                    problem,
+                                                                    new TSP2OptNeighbourhood(),
+                                                                    numReplicas, minTemp, maxTemp
+                                                               );
             
             // set maximum runtime
             parallelTempering.addStopCriterion(new MaxRuntime(timeLimit, TimeUnit.SECONDS));
@@ -151,7 +147,7 @@ public class TSP3 {
             Evaluation ptBestEval = null;
             if(parallelTempering.getBestSolution() != null){
                 System.out.println("Best round trip: "
-                                        + parallelTempering.getBestSolution().getOrder());
+                                        + parallelTempering.getBestSolution().getCities());
                 ptBestEval = parallelTempering.getBestSolutionEvaluation();
                 System.out.println("Best round trip travel distance: "
                                         + ptBestEval);
@@ -170,7 +166,7 @@ public class TSP3 {
             System.out.println("Summary:");
             System.out.println("---------------------------------------");
 
-            System.out.println("Number of cities: " + data.getIDs().size());
+            System.out.println("Number of cities: " + data.getNumCities());
             System.out.println("Time limit: " + timeLimit + " seconds");
             System.out.println("---------------------------------------");
 
@@ -193,16 +189,13 @@ public class TSP3 {
 
     // compute average travel distance for symmetric distance matrix
     private static double computeAverageTravelDistance(TSPData data){
-        Set<Integer> ids = data.getIDs();
+        int n = data.getNumCities();
         double sum = 0.0;
-        for(int id1 : ids){
-            for(int id2 : ids) {
-                if(id1 < id2){
-                    sum += data.getDistance(id1, id2);
-                }
+        for(int i=0; i<n; i++){
+            for(int j=i+1; j<n; j++) {
+                sum += data.getDistance(i, j);
             }
         }
-        int n = ids.size();
         int numDistances = n*(n-1)/2;
         return sum/numDistances;
     }
