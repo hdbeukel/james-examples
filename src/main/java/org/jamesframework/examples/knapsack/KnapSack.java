@@ -93,7 +93,7 @@ public class KnapSack {
             // create constraint
             KnapsackConstraint constraint = new KnapsackConstraint(capacity);
             // create subset problem (all sizes allowed)
-            SubsetProblem<KnapsackData> problem = new SubsetProblem<>(obj, data, 0, data.getIDs().size());
+            SubsetProblem<KnapsackData> problem = new SubsetProblem<>(obj, data);
             // add mandatory constraint
             problem.addMandatoryConstraint(constraint);
             
