@@ -124,25 +124,13 @@ public class Main {
         System.out.println("Example 4B: the travelling salesman problem (2)");
         System.out.println("-----------------------------------------------");
         System.out.println("");
-        System.out.println("Reconsiders implementing TSP by extending AbstractProblem \n"
-                         + "to separate the data from the objective (and possible constraints).");
-        System.out.println("");
-        System.out.println("Usage:");
-        System.out.println("");
-        System.out.println("java -cp james-examples.jar "
-                         + "org.jamesframework.examples.tsp2.TSP2 "
-                         + "<inputfile> <runtime>");
-        System.out.println("");
-        System.out.println("Example 4C: the travelling salesman problem (3)");
-        System.out.println("-----------------------------------------------");
-        System.out.println("");
         System.out.println("Reconsiders implementing TSP by using the generic components for \n"
                          + "permutation problems as defined in the extensions module.");
         System.out.println("");
         System.out.println("Usage:");
         System.out.println("");
         System.out.println("java -cp james-examples.jar "
-                         + "org.jamesframework.examples.tsp3.TSP3 "
+                         + "org.jamesframework.examples.tsp2.TSP2 "
                          + "<inputfile> <runtime>");
         System.out.println("");
         System.out.println("Example 5A: parameter sweep");
