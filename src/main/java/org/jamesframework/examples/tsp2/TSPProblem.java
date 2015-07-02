@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import org.jamesframework.core.problems.AbstractProblem;
+import org.jamesframework.core.problems.GenericProblem;
 import org.jamesframework.examples.tsp.TSPSolution;
 
 /**
@@ -30,7 +30,7 @@ import org.jamesframework.examples.tsp.TSPSolution;
  * 
  * @author <a href="mailto:herman.debeukelaer@ugent.be">Herman De Beukelaer</a>
  */
-public class TSPProblem extends AbstractProblem<TSPSolution, TSPData>{
+public class TSPProblem extends GenericProblem<TSPSolution, TSPData>{
 
     public TSPProblem(TSPData data) {
         // set TSP objective and pass data (distance matrix) to super class

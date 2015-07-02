@@ -17,7 +17,7 @@
 package org.jamesframework.examples.clique;
 
 import java.util.Random;
-import org.jamesframework.core.problems.AbstractProblem;
+import org.jamesframework.core.problems.GenericProblem;
 import org.jamesframework.core.problems.objectives.Objective;
 
 /**
@@ -25,7 +25,7 @@ import org.jamesframework.core.problems.objectives.Objective;
  * 
  * @author <a href="mailto:herman.debeukelaer@ugent.be">Herman De Beukelaer</a>
  */
-public class CliqueProblem extends AbstractProblem<CliqueSolution, CliqueData>{
+public class CliqueProblem extends GenericProblem<CliqueSolution, CliqueData>{
 
     public CliqueProblem(Objective<? super CliqueSolution, ? super CliqueData> objective, CliqueData data) {
         super(objective, data);

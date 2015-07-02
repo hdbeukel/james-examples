@@ -19,7 +19,7 @@ package org.jamesframework.examples.tsp2;
 import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
 import java.util.concurrent.TimeUnit;
-import org.jamesframework.core.problems.AbstractProblem;
+import org.jamesframework.core.problems.GenericProblem;
 import org.jamesframework.core.problems.objectives.evaluations.Evaluation;
 import org.jamesframework.core.search.LocalSearch;
 import org.jamesframework.core.search.algo.ParallelTempering;
@@ -31,7 +31,7 @@ import org.jamesframework.examples.util.ProgressSearchListener;
 
 /**
  * Main class for the travelling salesman example (example 4B).
- * This version implements the problem by extending {@link AbstractProblem}
+ * This version implements the problem by extending {@link GenericProblem}
  * to separate the data from the objective (and possible constraints).
  * 
  * @author <a href="mailto:herman.debeukelaer@ugent.be">Herman De Beukelaer</a>

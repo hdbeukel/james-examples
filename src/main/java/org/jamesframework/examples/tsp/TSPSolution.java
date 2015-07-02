@@ -19,7 +19,7 @@ package org.jamesframework.examples.tsp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import org.jamesframework.core.problems.Solution;
+import org.jamesframework.core.problems.sol.Solution;
 
 /**
  * Represent a solution to the travelling salesman problem.
