@@ -122,7 +122,7 @@ public class ParameterSweep {
             CoreSubsetData data = datasets.get(d);
             // set core size
             int coreSize = (int) Math.round(selRatio * data.getIDs().size());
-            SubsetProblem<CoreSubsetData> problem = new SubsetProblem<>(obj, data, coreSize);
+            SubsetProblem<CoreSubsetData> problem = new SubsetProblem<>(data, obj, coreSize);
             // set problem ID to file name (without directories and without extension)
             String path = filePaths.get(d);
             String filename = new File(path).getName();

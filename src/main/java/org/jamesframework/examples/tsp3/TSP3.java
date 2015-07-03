@@ -83,7 +83,7 @@ public class TSP3 {
             TSPObjective obj = new TSPObjective();
             
             // wrap data and objective in permutation problem
-            PermutationProblem<TSPData> problem = new PermutationProblem<>(obj, data);
+            PermutationProblem<TSPData> problem = new PermutationProblem<>(data, obj);
                     
             System.out.println("# OPTIMIZING TSP ROUND TRIP");
 

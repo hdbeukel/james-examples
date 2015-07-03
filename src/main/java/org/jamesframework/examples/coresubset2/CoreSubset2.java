@@ -85,7 +85,7 @@ public class CoreSubset2 {
             // create objective
             CoreSubsetObjectiveWithDelta obj = new CoreSubsetObjectiveWithDelta();
             // create subset problem
-            SubsetProblem<CoreSubsetData> problem = new SubsetProblem<>(obj, data, subsetSize);
+            SubsetProblem<CoreSubsetData> problem = new SubsetProblem<>(data, obj, subsetSize);
 
             // create random descent search with single swap neighbourhood
             RandomDescent<SubsetSolution> search = new RandomDescent<>(problem, new SingleSwapNeighbourhood());

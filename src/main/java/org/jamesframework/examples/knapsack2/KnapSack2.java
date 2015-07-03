@@ -90,7 +90,7 @@ public class KnapSack2 {
             // IMPORTANT: IDs are ordered based on the weight of the corresponding item,
             //            as required by the applied penalizing constraint
             SubsetProblem<KnapsackData> problem = new SubsetProblem<>(
-                                                        obj, data,
+                                                        data, obj,
                                                         0, data.getIDs().size(),
                                                         Comparator.comparing(data::getWeight).reversed()
                                                   );

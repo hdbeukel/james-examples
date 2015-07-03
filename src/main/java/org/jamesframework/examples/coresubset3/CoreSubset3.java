@@ -90,7 +90,7 @@ public class CoreSubset3 {
             // create objective
             EntryToNearestEntryObjective obj = new EntryToNearestEntryObjective();
             // create subset problem
-            SubsetProblem<CoreSubsetData> problem = new SubsetProblem<>(obj, data, subsetSize);
+            SubsetProblem<CoreSubsetData> problem = new SubsetProblem<>(data, obj, subsetSize);
             
             /******************/
             /* RANDOM DESCENT */
