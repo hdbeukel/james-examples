@@ -103,7 +103,7 @@ public class KnapSack {
             // set custom generator
             problem.setRandomSolutionGenerator((r,d) -> {
                 // 1: create default random initial solution
-                SubsetSolution sol = defaultRndSolGen.createRandomSolution(r, d);
+                SubsetSolution sol = defaultRndSolGen.create(r, d);
                 // 2: compute current total weight
                 double weight = computeSelectionWeight(sol, d);
                 // 3: remove random items as long as total weight is larger than the capacity
