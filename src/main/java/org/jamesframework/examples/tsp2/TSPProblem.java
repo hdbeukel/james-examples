@@ -34,7 +34,7 @@ public class TSPProblem extends GenericProblem<TSPSolution, TSPData>{
 
     public TSPProblem(TSPData data) {
         // set TSP objective and pass data (distance matrix) to super class
-        super(new TSPObjective(), data);
+        super(data, new TSPObjective(), null);
     }
 
     @Override
