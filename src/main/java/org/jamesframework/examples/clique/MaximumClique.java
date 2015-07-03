@@ -20,6 +20,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import org.jamesframework.core.problems.GenericProblem;
 import org.jamesframework.core.search.LocalSearch;
 import org.jamesframework.core.subset.SubsetSolution;
 import org.jamesframework.core.search.algo.RandomDescent;
@@ -84,8 +85,11 @@ public class MaximumClique {
 
             // create objective
             CliqueObjective obj = new CliqueObjective();
-            // create clique problem
-            CliqueProblem cliqueProblem = new CliqueProblem(obj, data);
+            // create problem
+            GenericProblem<CliqueSolution, CliqueData> cliqueProblem = new GenericProblem<>(data, obj, (r,d) -> {
+                // random solution generator throws exception (not supported for this problem)
+                throw new UnsupportedOperationException("Creating a random clique is not supported.");
+            });
             
             /******************/
             /* RANDOM DESCENT */
