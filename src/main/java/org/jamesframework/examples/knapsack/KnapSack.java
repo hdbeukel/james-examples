@@ -17,12 +17,9 @@
 package org.jamesframework.examples.knapsack;
 
 import java.io.FileNotFoundException;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
-import org.jamesframework.core.factory.MetropolisSearchFactory;
-import org.jamesframework.core.problems.Problem;
 import org.jamesframework.core.problems.objectives.evaluations.Evaluation;
-import org.jamesframework.core.search.algo.MetropolisSearch;
+import org.jamesframework.core.problems.sol.RandomSolutionGenerator;
 import org.jamesframework.core.subset.SubsetProblem;
 import org.jamesframework.core.subset.SubsetSolution;
 import org.jamesframework.core.search.algo.ParallelTempering;
@@ -38,9 +35,7 @@ import org.jamesframework.examples.util.ProgressSearchListener;
  * @author <a href="mailto:herman.debeukelaer@ugent.be">Herman De Beukelaer</a>
  */
 public class KnapSack {
-    
-    private static final Random RG = new Random();
-    
+        
     /**
      * Runs the knapsack problem. Expects three parameters: (1) the input file path, (2) the capacity of the knapsack
      * and (3) the runtime limit (in seconds). The input is specified in a text file in which the first row contains
@@ -93,9 +88,37 @@ public class KnapSack {
             // create constraint
             KnapsackConstraint constraint = new KnapsackConstraint(capacity);
             // create subset problem (all sizes allowed)
-            SubsetProblem<KnapsackData> problem = new SubsetProblem<>(obj, data);
+            SubsetProblem<KnapsackData> problem = new SubsetProblem<>(data, obj);
             // add mandatory constraint
             problem.addMandatoryConstraint(constraint);
+            
+            /**************************************************/
+            /* Set custom random solution generator to ensure */
+            /* initial selection within knapsack capacity     */
+            /**************************************************/
+            
+            // retrieve default random solution generator
+            RandomSolutionGenerator<? extends SubsetSolution, ? super KnapsackData> defaultRndSolGen = problem.getRandomSolutionGenerator();
+            
+            // set custom generator
+            problem.setRandomSolutionGenerator((r,d) -> {
+                // 1: create default random initial solution
+                SubsetSolution sol = defaultRndSolGen.createRandomSolution(r, d);
+                // 2: compute current total weight
+                double weight = computeSelectionWeight(sol, d);
+                // 3: remove random items as long as total weight is larger than the capacity
+                while(weight > capacity){
+                    int id = SetUtilities.getRandomElement(sol.getSelectedIDs(), r);
+                    sol.deselect(id);
+                    weight -= data.getWeight(id);
+                }
+                // 4: retain random subset to increase initial solution variability
+                int finalSize = r.nextInt(sol.getNumSelectedIDs()+1);
+                sol.deselectAll(SetUtilities.getRandomSubset(sol.getSelectedIDs(),
+                                                                         sol.getNumSelectedIDs()-finalSize,
+                                                                         r));
+                return sol;
+            });
             
             /******************/
             /* RANDOM DESCENT */
@@ -109,8 +132,6 @@ public class KnapSack {
             randomDescent.addStopCriterion(new MaxRuntime(timeLimit, TimeUnit.SECONDS));
             // attach listener
             randomDescent.addSearchListener(new ProgressSearchListener());
-            // IMPORTANT: set valid initial solution
-            randomDescent.setCurrentSolution(createInitialSolution(problem, data, capacity));
 
             // start search
             randomDescent.start();
@@ -141,22 +162,11 @@ public class KnapSack {
             double scale = computeAverageProfit(data);
             double minTemp = scale * 0.001;
             double maxTemp = scale * 0.1;
-            // create parallel tempering with:
-            //  - single perturbation neighbourhood
-            //  - custom Metropolis search factory to set independently
-            //    generated valid initial solution in each replica
+            // create parallel tempering with single perturbation neighbourhood
             int numReplicas = 10;
-            MetropolisSearchFactory<SubsetSolution> replicaFactory = (prob, neigh, temp) -> {
-                // create Metropolis search with requested parameters
-                MetropolisSearch<SubsetSolution> metropolis = new MetropolisSearch<>(prob, neigh, temp);
-                // set valid initial solution
-                metropolis.setCurrentSolution(createInitialSolution(prob, data, capacity));
-                return metropolis;
-            };
             ParallelTempering<SubsetSolution> parallelTempering = new ParallelTempering<>(problem,
                                                                         new SinglePerturbationNeighbourhood(),
-                                                                        numReplicas, minTemp, maxTemp,
-                                                                        replicaFactory);
+                                                                        numReplicas, minTemp, maxTemp);
             System.out.println("Min. temperature: " + minTemp);
             System.out.println("Max. temperature: " + maxTemp);
             
@@ -215,26 +225,6 @@ public class KnapSack {
             System.exit(2);
         }
         
-    }
-    
-    // create a custom initial solution that does not exceed the knapsack capacity
-    private static SubsetSolution createInitialSolution(Problem<SubsetSolution> problem, KnapsackData data, double capacity){
-        // 1: create random initial solution
-        SubsetSolution initialSolution = problem.createRandomSolution(RG);
-        // 2: compute current total weight
-        double weight = computeSelectionWeight(initialSolution, data);
-        // 3: remove random items as long as total weight is larger than the capacity
-        while(weight > capacity){
-            int id = SetUtilities.getRandomElement(initialSolution.getSelectedIDs(), RG);
-            initialSolution.deselect(id);
-            weight -= data.getWeight(id);
-        }
-        // 4: retain random subset to increase randomness
-        int finalSize = RG.nextInt(initialSolution.getNumSelectedIDs()+1);
-        initialSolution.deselectAll(SetUtilities.getRandomSubset(initialSolution.getSelectedIDs(),
-                                                                 initialSolution.getNumSelectedIDs()-finalSize,
-                                                                 RG));
-        return initialSolution;
     }
     
     private static double computeSelectionWeight(SubsetSolution solution, KnapsackData data){
