@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.jamesframework.examples.tsp3;
+package org.jamesframework.examples.tsp;
 
 import java.util.List;
 import org.jamesframework.core.exceptions.IncompatibleDeltaEvaluationException;
@@ -22,20 +22,18 @@ import org.jamesframework.core.problems.objectives.Objective;
 import org.jamesframework.core.problems.objectives.evaluations.Evaluation;
 import org.jamesframework.core.problems.objectives.evaluations.SimpleEvaluation;
 import org.jamesframework.core.search.neigh.Move;
-import org.jamesframework.ext.permutation.PermutationSolution;
-import org.jamesframework.ext.permutation.neigh.moves.ReverseSubsequenceMove;
 
 /**
  * Objective for the TSP problem: minimize total travel distance of the round trip.
  * 
  * @author <a href="mailto:herman.debeukelaer@ugent.be">Herman De Beukelaer</a>
  */
-public class TSPObjective implements Objective<PermutationSolution, TSPData>{
+public class TSPObjective implements Objective<TSPSolution, TSPData>{
 
     @Override
-    public Evaluation evaluate(PermutationSolution solution, TSPData data) {
+    public Evaluation evaluate(TSPSolution solution, TSPData data) {
         // compute sum of travel distances
-        List<Integer> cities = solution.getOrder();
+        List<Integer> cities = solution.getCities();
         int n = cities.size();
         double totalDistance = 0.0;
         for(int i=0; i<n; i++){
@@ -48,34 +46,34 @@ public class TSPObjective implements Objective<PermutationSolution, TSPData>{
     }
 
     @Override
-    public Evaluation evaluate(Move move, PermutationSolution curSolution, Evaluation curEvaluation, TSPData data){
+    public Evaluation evaluate(Move move, TSPSolution curSolution, Evaluation curEvaluation, TSPData data){
         
         // check move type
-        if(!(move instanceof ReverseSubsequenceMove)){
-            throw new IncompatibleDeltaEvaluationException("Delta evaluation in TSP objective expects move of type ReverseSubsequenceMove.");
+        if(!(move instanceof TSP2OptMove)){
+            throw new IncompatibleDeltaEvaluationException("Delta evaluation in TSP objective expects move of type TSP2OptMove.");
         }
         // cast move
-        ReverseSubsequenceMove move2opt = (ReverseSubsequenceMove) move;
+        TSP2OptMove move2opt = (TSP2OptMove) move;
         // get bounds of reversed subsequence
-        int from = move2opt.getFrom();
-        int to = move2opt.getTo();
+        int i = move2opt.getI();
+        int j = move2opt.getJ();
         // get number of cities
-        int n = curSolution.size();
+        int n = data.getNumCities();
         
-        if((to+1)%n == from){
+        if((j+1)%n == i){
             // special case: entire round trip reversed
             return curEvaluation;
         } else {
             // get current total travel distance
             double totalDistance = curEvaluation.getValue();
             // get current order of cities
-            List<Integer> cities = curSolution.getOrder();
+            List<Integer> cities = curSolution.getCities();
 
             // get crucial cities (at boundary of reversed subsequence)
-            int beforeReversed = cities.get((from-1+n)%n);
-            int firstReversed = cities.get(from);
-            int lastReversed = cities.get(to);
-            int afterReversed = cities.get((to+1)%n);
+            int beforeReversed = cities.get((i-1+n)%n);
+            int firstReversed = cities.get(i);
+            int lastReversed = cities.get(j);
+            int afterReversed = cities.get((j+1)%n);
 
             // account for dropped distances
             totalDistance -= data.getDistance(beforeReversed, firstReversed);

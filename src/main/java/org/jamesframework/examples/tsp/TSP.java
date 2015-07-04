@@ -18,8 +18,14 @@ package org.jamesframework.examples.tsp;
 
 import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+import org.jamesframework.core.problems.GenericProblem;
+import org.jamesframework.core.problems.Problem;
 import org.jamesframework.core.problems.objectives.evaluations.Evaluation;
+import org.jamesframework.core.problems.sol.RandomSolutionGenerator;
 import org.jamesframework.core.search.LocalSearch;
 import org.jamesframework.core.search.algo.ParallelTempering;
 import org.jamesframework.core.search.algo.RandomDescent;
@@ -28,6 +34,8 @@ import org.jamesframework.examples.util.ProgressSearchListener;
 
 /**
  * Main class for the travelling salesman example (example 4A).
+ * This version implements the problem by extending {@link GenericProblem}
+ * to separate the data from the objective (and possible constraints).
  * 
  * @author <a href="mailto:herman.debeukelaer@ugent.be">Herman De Beukelaer</a>
  */
@@ -67,11 +75,33 @@ public class TSP {
         
         try {
             
-            TSPProblem problem = new TSPFileReader().read(filePath);
-                    
+            /*************************/
+            /* PROBLEM SPECIFICATION */
+            /*************************/
+            
+            // read data (distance matrix)
+            TSPData data = new TSPFileReader().read(filePath);
+            // create objective
+            TSPObjective obj = new TSPObjective();
+            // specify random solution generator
+            RandomSolutionGenerator<TSPSolution, TSPData> rsl = (r,d) -> {
+                // create random permutation of cities
+                List<Integer> cities = new ArrayList<>();
+                int n = d.getNumCities();
+                for(int i=0; i<n; i++){
+                    cities.add(i);
+                }
+                Collections.shuffle(cities, r);
+                // create and return TSP solution
+                return new TSPSolution(cities);
+            };
+            
+            // wrap in generic problem
+            Problem<TSPSolution> problem = new GenericProblem<>(data, obj, rsl);        
+            
             System.out.println("# OPTIMIZING TSP ROUND TRIP");
 
-            System.out.println("Number of cities: " + problem.getNumCities());
+            System.out.println("Number of cities: " + data.getNumCities());
             System.out.println("Time limit: " + timeLimit + " seconds");
             
             /******************/
@@ -112,7 +142,7 @@ public class TSP {
             System.out.println("# PARALLEL TEMPERING");
 
             // set temperature range, scaled according to average travel disctance between cities
-            double scale = computeAverageTravelDistance(problem);
+            double scale = computeAverageTravelDistance(data);
             double minTemp = scale * 0.001;
             double maxTemp = scale * 0.1;
             // create parallel tempering search with TSP neighbourhood
@@ -154,7 +184,7 @@ public class TSP {
             System.out.println("Summary:");
             System.out.println("---------------------------------------");
 
-            System.out.println("Number of cities: " + problem.getNumCities());
+            System.out.println("Number of cities: " + data.getNumCities());
             System.out.println("Time limit: " + timeLimit + " seconds");
             System.out.println("---------------------------------------");
 
@@ -174,15 +204,14 @@ public class TSP {
         }
         
     }
-    
+
     // compute average travel distance for symmetric distance matrix
-    private static double computeAverageTravelDistance(TSPProblem problem){
-        int n = problem.getNumCities();
-        double[][] d = problem.getDistanceMatrix();
+    private static double computeAverageTravelDistance(TSPData data){
+        int n = data.getNumCities();
         double sum = 0.0;
         for(int i=0; i<n; i++){
             for(int j=i+1; j<n; j++) {
-                sum += d[i][j];
+                sum += data.getDistance(i, j);
             }
         }
         int numDistances = n*(n-1)/2;

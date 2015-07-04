@@ -70,7 +70,7 @@ public class Main {
                          + "<inputfile> <subsetsize> <runtime>");
         System.out.println("");
         System.out.println("Example 2A: the 0/1 knapsack problem");
-        System.out.println("-----------------------------------");
+        System.out.println("------------------------------------");
         System.out.println("");
         System.out.println("Given a series of items with a specific profit and weight, select a subset \n"
                          + "of these items with maximum total profit without exceeding the capacity \n"
@@ -112,7 +112,7 @@ public class Main {
         System.out.println("Example 4A: the travelling salesman problem");
         System.out.println("------------------------------------------");
         System.out.println("");
-        System.out.println("This example demonstrates a basic implementation of the symmetric TSP problem, \n"
+        System.out.println("This example demonstrates the implementation of a basic symmetric TSP problem, \n"
                          + "which is not a subset selection but a permutation problem.");
         System.out.println("");
         System.out.println("Usage:");
