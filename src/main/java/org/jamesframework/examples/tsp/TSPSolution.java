@@ -17,6 +17,7 @@
 package org.jamesframework.examples.tsp;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import org.jamesframework.core.problems.sol.Solution;
@@ -43,9 +44,7 @@ public class TSPSolution extends Solution {
     
     // swap the i-th and j-th city in the round trip
     public void swapCities(int i, int j){
-        int tmp = cities.get(i);
-        cities.set(i, cities.get(j));
-        cities.set(j, tmp);
+        Collections.swap(cities, i, j);
     }
     
     @Override
@@ -67,9 +66,7 @@ public class TSPSolution extends Solution {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 29 * hash + Objects.hashCode(this.cities);
-        return hash;
+        return Objects.hashCode(cities);
     }
 
 }
