@@ -84,7 +84,7 @@ public class TSP {
             // create objective
             TSPObjective obj = new TSPObjective();
             // specify random solution generator
-            RandomSolutionGenerator<TSPSolution, TSPData> rsl = (r,d) -> {
+            RandomSolutionGenerator<TSPSolution, TSPData> rsg = (r,d) -> {
                 // create random permutation of cities
                 List<Integer> cities = new ArrayList<>();
                 int n = d.getNumCities();
@@ -97,7 +97,7 @@ public class TSP {
             };
             
             // wrap in generic problem
-            Problem<TSPSolution> problem = new GenericProblem<>(data, obj, rsl);        
+            Problem<TSPSolution> problem = new GenericProblem<>(data, obj, rsg);        
             
             System.out.println("# OPTIMIZING TSP ROUND TRIP");
 
