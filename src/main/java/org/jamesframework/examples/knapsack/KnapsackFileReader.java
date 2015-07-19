@@ -18,6 +18,7 @@ package org.jamesframework.examples.knapsack;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Locale;
 import java.util.Scanner;
 
 /**
@@ -31,6 +32,7 @@ public class KnapsackFileReader {
     
     public KnapsackData read(String filePath) throws FileNotFoundException{
         Scanner sc = new Scanner(new File(filePath));
+        sc.useLocale(Locale.US);
         // read number of available items
         int n = sc.nextInt();
         // read all item profits and weights

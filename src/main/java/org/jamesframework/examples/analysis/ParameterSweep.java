@@ -20,9 +20,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
@@ -138,7 +140,7 @@ public class ParameterSweep {
         StopCriterion stopCrit = new MaxRuntime(timeLimit, TimeUnit.SECONDS);
         
         double tempDelta = (maxTemp - minTemp)/(numSearches - 1);
-        DecimalFormat df = new DecimalFormat("#.################");
+        DecimalFormat df = new DecimalFormat("#.################", DecimalFormatSymbols.getInstance(Locale.US));
         for(int s = 0; s < numSearches; s++){
             // compute temperature
             double temp = minTemp + s * tempDelta;

@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
@@ -34,6 +35,7 @@ public class CliqueFileReader {
 
     public CliqueData read(String filePath) throws FileNotFoundException{
         Scanner sc = new Scanner(new File(filePath));
+        sc.useLocale(Locale.US);
         Map<Integer, Set<Integer>> adj = new HashMap<>();
         while(sc.hasNext()){
             int v1 = sc.nextInt();

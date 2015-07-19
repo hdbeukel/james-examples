@@ -18,6 +18,7 @@ package org.jamesframework.examples.tsp;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Locale;
 import java.util.Scanner;
 
 /**
@@ -41,6 +42,7 @@ public class TSPFileReader {
     public TSPData read(String filePath) throws FileNotFoundException {
         // create scanner
         Scanner sc = new Scanner(new File(filePath));
+        sc.useLocale(Locale.US);
         // read number of cities
         int n = sc.nextInt();
         // initialize distance matrix

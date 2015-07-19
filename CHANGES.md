@@ -4,7 +4,7 @@ JAMES Examples Module Changes
 Version 1.1.1 (under development)
 ---------------------------------
 
- - ...
+ - Use US locale for all input and output.
 
 Version 1.1 (11/07/2015)
 ------------------------

@@ -18,6 +18,7 @@ package org.jamesframework.examples.coresubset;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Locale;
 import java.util.Scanner;
 
 /**
@@ -37,6 +38,7 @@ public class CoreSubsetFileReader {
      */
     public CoreSubsetData read(String filePath) throws FileNotFoundException{
         Scanner sc = new Scanner(new File(filePath));
+        sc.useLocale(Locale.US);
         // read names
         String[] names = sc.nextLine().split(",");
         int n = names.length;

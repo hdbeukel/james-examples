@@ -18,9 +18,11 @@ package org.jamesframework.examples.tsp;
 
 import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import org.jamesframework.core.problems.GenericProblem;
 import org.jamesframework.core.problems.Problem;
@@ -189,7 +191,7 @@ public class TSP {
             System.out.println("Time limit: " + timeLimit + " seconds");
             System.out.println("---------------------------------------");
 
-            DecimalFormat df = new DecimalFormat("0.0");
+            DecimalFormat df = new DecimalFormat("0.0", DecimalFormatSymbols.getInstance(Locale.US));
             System.out.format("%20s    %15s \n", "", "Travel distance");
             System.out.format("%20s    %15s \n",
                                 "Random descent:",

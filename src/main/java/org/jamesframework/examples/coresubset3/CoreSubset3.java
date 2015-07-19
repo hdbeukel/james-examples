@@ -18,6 +18,8 @@ package org.jamesframework.examples.coresubset3;
 
 import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import org.jamesframework.core.problems.objectives.evaluations.Evaluation;
@@ -182,7 +184,7 @@ public class CoreSubset3 {
             System.out.println("Time limit: " + timeLimit + " seconds");
             System.out.println("---------------------------------------");
 
-            DecimalFormat df = new DecimalFormat("0.000");
+            DecimalFormat df = new DecimalFormat("0.000", DecimalFormatSymbols.getInstance(Locale.US));
             System.out.format("%20s    %13s \n", "", "Best solution");
             System.out.format("%20s    %13s \n",
                                 "Random descent:",
