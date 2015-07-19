@@ -41,6 +41,19 @@ import org.jamesframework.examples.util.ProgressSearchListener;
  */
 public class TSP {
     
+    // specify random solution generator
+    public static final RandomSolutionGenerator<TSPSolution, TSPData> RANDOM_SOLUTION_GENERATOR = (rnd, data) -> {
+        // create random permutation of cities
+        List<Integer> cities = new ArrayList<>();
+        int n = data.getNumCities();
+        for(int i=0; i<n; i++){
+            cities.add(i);
+        }
+        Collections.shuffle(cities, rnd);
+        // create and return TSP solution
+        return new TSPSolution(cities);
+    };
+    
     /**
      * Solves a (symmetric) travelling salesman problem. Expects two parameters: (1) the input file path and
      * (2) the runtime limit (in seconds). The input is specified in a text file in which the first row contains
@@ -83,21 +96,9 @@ public class TSP {
             TSPData data = new TSPFileReader().read(filePath);
             // create objective
             TSPObjective obj = new TSPObjective();
-            // specify random solution generator
-            RandomSolutionGenerator<TSPSolution, TSPData> rsg = (r,d) -> {
-                // create random permutation of cities
-                List<Integer> cities = new ArrayList<>();
-                int n = d.getNumCities();
-                for(int i=0; i<n; i++){
-                    cities.add(i);
-                }
-                Collections.shuffle(cities, r);
-                // create and return TSP solution
-                return new TSPSolution(cities);
-            };
             
             // wrap in generic problem
-            Problem<TSPSolution> problem = new GenericProblem<>(data, obj, rsg);        
+            Problem<TSPSolution> problem = new GenericProblem<>(data, obj, RANDOM_SOLUTION_GENERATOR);        
             
             System.out.println("# OPTIMIZING TSP ROUND TRIP");
 
