@@ -144,10 +144,11 @@ public class TSP {
             
             System.out.println("# PARALLEL TEMPERING");
 
-            // set temperature range, scaled according to average travel disctance between cities
-            double scale = computeAverageTravelDistance(data);
-            double minTemp = scale * 0.001;
-            double maxTemp = scale * 0.1;
+            // set temperature range, scaled according to average
+            // distance between cities and their nearest neighbours
+            double scale = computeAvgNearestNeighbourDistance(data);
+            double minTemp = scale * 1e-8;
+            double maxTemp = scale * 0.6;
             // create parallel tempering search with TSP neighbourhood
             int numReplicas = 10;
             ParallelTempering<TSPSolution> parallelTempering = new ParallelTempering<>(
@@ -208,17 +209,21 @@ public class TSP {
         
     }
 
-    // compute average travel distance for symmetric distance matrix
-    private static double computeAverageTravelDistance(TSPData data){
+    // compute average nearest neighbour distance
+    private static double computeAvgNearestNeighbourDistance(TSPData data){
         int n = data.getNumCities();
         double sum = 0.0;
         for(int i=0; i<n; i++){
-            for(int j=i+1; j<n; j++) {
-                sum += data.getDistance(i, j);
+            double min = Double.MAX_VALUE;
+            for(int j=0; j<n; j++) {
+                double dist = data.getDistance(i, j);
+                if(dist > 0.0 && dist < min){
+                    min = dist;
+                }
             }
+            sum += min;
         }
-        int numDistances = n*(n-1)/2;
-        return sum/numDistances;
+        return sum/n;
     }
     
 }
