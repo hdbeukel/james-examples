@@ -1,8 +1,8 @@
 JAMES Examples Module Changes
 =============================
 
-Version 1.1.1 (under development)
----------------------------------
+Version 1.1.1 (28/08/2015)
+--------------------------
 
  - Updated TSP examples (4A, 4B): temperature range and scaling.
  - Use US locale for all input and output.
