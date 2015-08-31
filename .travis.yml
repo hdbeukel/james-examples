@@ -5,10 +5,6 @@ sudo: false
 jdk:
   - oraclejdk8
 
-branches:
-  only:
-    - master
-
 env:
   global:
     - SONATYPE_USERNAME=hdbeukel
