@@ -1,10 +1,10 @@
 JAMES Examples Module Changes
 =============================
 
-Version 1.1.2 (under development)
----------------------------------
+Version 1.2 (12/08/2016)
+------------------------
 
- - ...
+ - Upgraded to core and extensions module v1.2.
 
 Version 1.1.1 (28/08/2015)
 --------------------------
