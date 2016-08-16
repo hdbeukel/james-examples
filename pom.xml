@@ -130,6 +130,12 @@
             <artifactId>james-extensions</artifactId>
             <version>1.2</version>
         </dependency>
+        <!-- SLF4J NOP: discard log messages -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-nop</artifactId>
+            <version>1.7.21</version>
+        </dependency>
         <!-- tests depend on core module tests -->
         <dependency>
             <groupId>${project.groupId}</groupId>
