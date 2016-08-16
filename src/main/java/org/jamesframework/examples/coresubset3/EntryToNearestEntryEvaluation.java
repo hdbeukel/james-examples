@@ -100,5 +100,10 @@ public class EntryToNearestEntryEvaluation implements Evaluation {
             return 0.0;
         }
     }
+
+    @Override
+    public String toString() {
+        return "E-NE = " + getValue();
+    }
     
 }
