@@ -1,4 +1,4 @@
-/*
+i/*
  * Copyright 2014 Ghent University, Bayer CropScience.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +18,7 @@ package org.jamesframework.examples;
 
 /**
  * Main class of the JAMES examples module that prints an overview of the
- * implemented examples when running Java on the distrubuted JAR-file.
+ * implemented examples when running Java on the distributed JAR-file.
  * 
  * @author <a href="mailto:herman.debeukelaer@ugent.be">Herman De Beukelaer</a>
  */
