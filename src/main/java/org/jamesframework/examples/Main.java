@@ -1,4 +1,4 @@
-i/*
+/*
  * Copyright 2014 Ghent University, Bayer CropScience.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
